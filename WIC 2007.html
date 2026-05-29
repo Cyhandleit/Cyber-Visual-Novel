@@ -9,62 +9,414 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play WIC 2007.</tw-noscript></noscript></tw-story>
-<tw-storydata name="WIC 2007" startnode="1" creator="Twine" creator-version="2.12.0" format="Harlowe" format-version="3.3.9" ifid="2ADDC15B-2BFE-4DB3-9263-EC12EDB859FE" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Start" tags="" position="675,275" size="100,100">You are playing rank games in your favorite mobile game today when you suddenly receive a DM from a high-tier player named &quot;DragonGod_Pro&quot;:
-&quot;Hey, you play pretty well! I can carry you to the highest rank and gift you a limited-edition skin for free. Want to add me on Discord or WhatsApp to chat?&quot;
+<tw-storydata name="WIC 2007" startnode="1" creator="Twine" creator-version="2.12.0" format="Harlowe" format-version="3.3.9" ifid="2ADDC15B-2BFE-4DB3-9263-EC12EDB859FE" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap');
 
-As a 14-year-old student, facing this temptation, you decide to:
+:root {
+	--bg-top: #071025;
+	--bg-bottom: #03060f;
+	--panel: rgba(8, 13, 28, 0.86);
+	--panel-border: rgba(118, 182, 255, 0.55);
+	--text-main: #eef5ff;
+	--text-dim: #aac0dd;
+	--accent: #54c6ff;
+	--accent-2: #38ffb9;
+	--choice-bg: rgba(10, 25, 53, 0.85);
+	--choice-hover: rgba(31, 70, 130, 0.92);
+}
 
-[[Awesome! Let&#39;s add him right away-&gt;Scene 1: Moving Platforms]]
-[[Decline. No stranger is ever this generous-&gt;Safe Ending: High Alert]]</tw-passagedata><tw-passagedata pid="2" name="Scene 1: Moving Platforms" tags="" position="612.5,400" size="100,100">After adding him, the &quot;pro player&quot; acts incredibly friendly and supportive:
-&quot;Nice! By the way, how old are you? Which school do you go to? You seem way more mature than kids your age. I&#39;m pretty lonely usually, and I feel like you&#39;re the only one who truly gets me. Hey, WhatsApp isn&#39;t very private. Let&#39;s move over to an encrypted app like Telegram or Signal. Don&#39;t let anyone else see our chats.&quot;
+tw-story {
+	font-family: 'Source Sans 3', sans-serif;
+	color: var(--text-main);
+	background:
+		radial-gradient(circle at 15% 20%, rgba(56, 255, 185, 0.07), transparent 32%),
+		radial-gradient(circle at 85% 10%, rgba(84, 198, 255, 0.11), transparent 34%),
+		linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
+	min-height: 100vh;
+	padding: 3vh 4vw 5vh;
+}
 
-At this point, you notice something feels a bit strange. You choose to:
+tw-passage {
+	max-width: 980px;
+	margin: 0 auto;
+	padding: 1.2rem 1.25rem 1.35rem;
+	border-radius: 14px;
+	background: var(--panel);
+	border: 1px solid var(--panel-border);
+	box-shadow:
+		0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+		0 12px 34px rgba(0, 0, 0, 0.45);
+}
 
-[[Agree. He just treats me as a close friend-&gt;Scene 2: Crossing Boundaries]]
-[[Refuse. Why does everything have to be so secretive?-&gt;Safe Ending: Timely Escape]]</tw-passagedata><tw-passagedata pid="3" name="Safe Ending: High Alert" tags="" position="737.5,400" size="100,100">&gt; **Awesome job! You successfully evaded an online predator!** 
-&gt; You spotted the red flags early, blocked the user, took screenshots to preserve the evidence, and immediately informed your parents or teachers.
+tw-sidebar {
+	filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+}
 
----
+tw-icon {
+	color: var(--accent);
+	font-size: 34px;
+}
 
-### 🛡️ Actionable Cybersecurity Advice:
-Real digital safety means staying vigilant when online strangers show sudden, intense &quot;affection&quot; or offer free rewards. 
-* **Never** share real names, schools, or photos with online gaming acquaintances.
-* **Never** agree to move to private, unmonitored chat apps.
-* If anyone asks you to keep a &quot;secret&quot; from your parents, that is the biggest red flag of all. **Always report it to a trusted adult immediately.**</tw-passagedata><tw-passagedata pid="4" name="Scene 2: Crossing Boundaries" tags="" position="550,525" size="100,100">In the private chat app, his tone becomes increasingly affectionate, even calling you &quot;babe&quot; or &quot;sweetie.&quot;
-One late night, he sends a message:
-&quot;I really want to see what you look like. Can you send me a quick picture? Just a casual selfie is fine. Oh, and whatever you do, *never* tell your parents or teachers about this. This is our little **special secret**, okay?&quot;
+h1, h2, h3 {
+	font-family: 'Orbitron', sans-serif;
+	letter-spacing: 0.06em;
+	color: var(--accent);
+	text-transform: uppercase;
+	margin-bottom: 0.65rem;
+}
 
-You start to feel uncomfortable. You choose to:
+p, li {
+	color: var(--text-main);
+}
 
-[[Send a quick selfie over-&gt;Dangerous Ending: Into the Trap]]
-[[Refuse and ask a trusted adult for help-&gt;Safe Ending: Successful Self-Rescue]]</tw-passagedata><tw-passagedata pid="5" name="Safe Ending: Timely Escape" tags="" position="675,525" size="100,100">&gt; **Awesome job! You successfully evaded an online predator!** 
-&gt; You spotted the red flags early, blocked the user, took screenshots to preserve the evidence, and immediately informed your parents or teachers.
+strong {
+	color: var(--accent-2);
+}
 
----
+hr {
+	border: none;
+	border-top: 1px solid rgba(117, 165, 228, 0.35);
+}
 
-### 🛡️ Actionable Cybersecurity Advice:
-Real digital safety means staying vigilant when online strangers show sudden, intense &quot;affection&quot; or offer free rewards. 
-* **Never** share real names, schools, or photos with online gaming acquaintances.
-* **Never** agree to move to private, unmonitored chat apps.
-* If anyone asks you to keep a &quot;secret&quot; from your parents, that is the biggest red flag of all. **Always report it to a trusted adult immediately.**</tw-passagedata><tw-passagedata pid="6" name="Dangerous Ending: Into the Trap" tags="" position="487.5,650" size="100,100">&gt; **You have been trapped!** 
-&gt; Immediately after getting your photo, his attitude completely changes. He begins to blackmail you, threatening to leak your picture to your school and parents unless you send even more private photos or money.
+tw-link,
+.enchantment-link {
+	display: block;
+	margin: 0.45rem 0;
+	padding: 0.64rem 0.8rem;
+	border-radius: 10px;
+	border: 1px solid rgba(122, 187, 255, 0.5);
+	background: var(--choice-bg);
+	color: #e8f4ff;
+	font-weight: 600;
+	text-decoration: none;
+	transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
+}
 
----
+tw-link:hover,
+.enchantment-link:hover {
+	transform: translateX(4px);
+	background: var(--choice-hover);
+	border-color: var(--accent);
+	color: #ffffff;
+}
 
-### 💡 Judges&#39; Note (Red Flags Breakdown):
-In this scenario, the predator demonstrated textbook **Grooming Tactics**:
-1. **Targeting via Incentives:** Using in-game perks and skins to lower the victim&#39;s defenses.
-2. **Isolating the Victim:** Moving the conversation to heavily encrypted apps and framing it as a &quot;special secret&quot; to cut off parental support.
-3. **Emotional Manipulation:** Flattering the teen by calling them &quot;mature&quot; to establish fake trust and emotional dependency.</tw-passagedata><tw-passagedata pid="7" name="Safe Ending: Successful Self-Rescue" tags="" position="612.5,650" size="100,100">&gt; **Awesome job! You successfully evaded an online predator!** 
-&gt; You spotted the red flags early, blocked the user, took screenshots to preserve the evidence, and immediately informed your parents or teachers.
+tw-link:active,
+.enchantment-link:active {
+	transform: translateX(1px);
+}
 
----
+blockquote {
+	margin: 0.9rem 0;
+	padding: 0.55rem 0.85rem;
+	border-left: 3px solid var(--accent);
+	background: rgba(10, 20, 44, 0.65);
+	color: var(--text-dim);
+}
 
-### 🛡️ Actionable Cybersecurity Advice:
-Real digital safety means staying vigilant when online strangers show sudden, intense &quot;affection&quot; or offer free rewards. 
-* **Never** share real names, schools, or photos with online gaming acquaintances.
-* **Never** agree to move to private, unmonitored chat apps.
-* If anyone asks you to keep a &quot;secret&quot; from your parents, that is the biggest red flag of all. **Always report it to a trusted adult immediately.**</tw-passagedata></tw-storydata>
+code {
+	color: #c8f2ff;
+	background: rgba(8, 27, 56, 0.8);
+	border: 1px solid rgba(83, 146, 220, 0.4);
+	border-radius: 6px;
+	padding: 0.08rem 0.32rem;
+}
+
+@media (max-width: 900px) {
+	tw-story {
+		padding: 2vh 3vw 3.5vh;
+		font-size: 1.18em;
+	}
+
+	tw-passage {
+		padding: 1rem 0.9rem 1.1rem;
+		border-radius: 12px;
+	}
+
+	tw-link,
+	.enchantment-link {
+		padding: 0.62rem 0.7rem;
+	}
+}
+</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Start" tags="" position="600,220" size="120,120">[Background: Neon Kuala Lumpur skyline. Soft lo-fi beat.]
+
+Narrator:
+A first laptop.
+A first social account.
+A first week online without supervision.
+
+System:
+CYBERTOK: THINK BEFORE YOU CLICK
+
+[[Start Game-&gt;Scene 01: First Account]]
+[[Safety Tips First-&gt;Safety Tips]]
+[[Assets and Image Upload Guide-&gt;Assets Guide]]</tw-passagedata><tw-passagedata pid="2" name="Safety Tips" tags="" position="850,220" size="120,120">System:
+Before you begin, remember:
+
+1. Do not share school details, address, or routine.
+2. Never share TAC, OTP, or passwords.
+3. Never move to secret chats with strangers.
+4. Screenshot suspicious behavior.
+5. Block, report, and tell a trusted adult.
+
+[[Continue-&gt;Scene 01: First Account]]
+[[Back to Start-&gt;Start]]</tw-passagedata><tw-passagedata pid="3" name="Assets Guide" tags="" position="350,220" size="140,120">This project expects images in the local folder:
+images/
+
+Upload folder link (replace with your real team link):
+https://example.com/upload-your-images-here
+
+You can also read the local checklist file:
+images/UPLOAD_GUIDE.md
+
+[[Image Checklist In-Game-&gt;Image Checklist]]
+[[Back to Start-&gt;Start]]</tw-passagedata><tw-passagedata pid="4" name="Scene 01: First Account" tags="" position="600,380" size="140,120">[Background: Bedroom desk, rain outside, laptop glow.]
+
+System: Welcome to CyberTok Malaysia (v2026.5). Initialize profile.
+
+You: Faiz should be done with cybersecurity class soon. Let me set up fast.
+
+Choose username:
+[[RealName_Official-&gt;Privacy Choice]]
+[[MythicKidX-&gt;Privacy Choice]]
+[[Custom Username-&gt;Privacy Choice]]</tw-passagedata><tw-passagedata pid="5" name="Privacy Choice" tags="" position="600,540" size="140,120">System: Select privacy settings.
+
+[[Public account, DMs open-&gt;Scene 02P: Public Start]]
+[[Private account, DMs limited-&gt;Scene 02R: Private Start]]</tw-passagedata><tw-passagedata pid="6" name="Scene 02P: Public Start" tags="" position="450,700" size="140,120">[Background: Profile page live, follower count climbs.]
+
+System: Account visibility is PUBLIC.
+
+System: Create your first post.
+
+[[OOTD in school uniform (higher exposure)-&gt;Scene 03: Threat Hub]]
+[[Laptop setup photo (lower exposure)-&gt;Scene 03: Threat Hub]]</tw-passagedata><tw-passagedata pid="7" name="Scene 02R: Private Start" tags="" position="760,700" size="140,120">[Background: Private lock icon appears on profile.]
+
+Narrator: Follow requests appear from unknown accounts.
+
+[[Accept all unknown requests-&gt;Scene 03: Threat Hub]]
+[[Accept only verified mutuals-&gt;Scene 03: Threat Hub]]
+[[Reject unknown requests-&gt;Scene 03: Threat Hub]]</tw-passagedata><tw-passagedata pid="8" name="Scene 03: Threat Hub" tags="" position="600,860" size="160,120">[Background: Notification flood.]
+
+System: New DM from AbangMer.11
+System: New DM from U_look_gut
+System: New DM from The_Si_Kamar
+System: New comment from BawangGirlzzz
+
+Which do you open first?
+
+[[Gamer DM (Grooming route)-&gt;G1 Friendly Entry]]
+[[Attractive profile DM (Sextortion route)-&gt;B1 Love Bombing]]
+[[Business offer DM (Scam route)-&gt;S1 Easy Money Bait]]
+[[Toxic comment thread (Cyberbully route)-&gt;C1 Bait Comment]]
+[[Skip all and check image assets-&gt;Assets Guide]]</tw-passagedata><tw-passagedata pid="9" name="G1 Friendly Entry" tags="" position="140,1040" size="140,120">[BGM: Calm acoustic]
+
+AbangMer.11: Hey bro, I am Mythic rank. Want free carry tonight?
+
+[[Sure, thanks!-&gt;G2 Personal Probing]]
+[[How do I know you are legit?-&gt;G2V Verification Attempt]]
+[[Ignore DM-&gt;G Safe Early Exit]]</tw-passagedata><tw-passagedata pid="10" name="G2V Verification Attempt" tags="" position="140,1200" size="140,120">You: How old are you and which school?
+
+AbangMer.11: Chill lah. I am 15. Here is my profile screenshot.
+
+Narrator: Screenshots are easy to fake.
+
+[[Trust screenshot-&gt;G2 Personal Probing]]
+[[Refuse and stay cautious-&gt;G Safe Early Exit]]</tw-passagedata><tw-passagedata pid="11" name="G2 Personal Probing" tags="" position="300,1200" size="140,120">Narrator: Conversation shifts from gaming to your family stress.
+
+AbangMer.11: Parents do not understand. I do. Tell me everything.
+
+[[Share deeper personal problems-&gt;G3 Isolation Tactic]]
+[[Keep chat game-only-&gt;G3 Isolation Tactic]]
+[[End session politely-&gt;G Safe Early Exit]]</tw-passagedata><tw-passagedata pid="12" name="G3 Isolation Tactic" tags="" position="300,1360" size="140,120">AbangMer.11: That Faiz friend does not care about you like I do.
+
+Narrator: This is isolation by suggestion.
+
+[[Maybe you are right...-&gt;G4 Secrecy and Migration]]
+[[Do not talk about my friends-&gt;G4 Secrecy and Migration]]
+[[Screenshot this message-&gt;G4 Secrecy and Migration]]</tw-passagedata><tw-passagedata pid="13" name="G4 Secrecy and Migration" tags="" position="300,1520" size="150,120">AbangMer.11: Move to Telegram. Keep this between us. I will send 1,000 diamonds.
+
+[CRITICAL CHOICE]
+[[Accept and move secretly-&gt;G BAD Ending]]
+[[Refuse secrecy, block, report-&gt;G GOOD Resolution]]
+[[Tell trusted adult first-&gt;G GOOD Resolution]]</tw-passagedata><tw-passagedata pid="14" name="G Safe Early Exit" tags="" position="60,1360" size="140,120">System: SAFE RESOLUTION (EARLY)
+
+You exit before grooming escalates.
+
+Cybersecurity note:
+- Fast trust + secrecy pressure is a red flag.
+
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="15" name="G GOOD Resolution" tags="" position="460,1520" size="140,120">You: Real friends do not need secrets. Blocked.
+
+System: User reported for suspicious grooming behavior.
+
+You: (to parent) Can we talk? Someone is being weird and pushy online.
+
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="16" name="G BAD Ending" tags="" position="140,1680" size="140,120">System: BAD ENDING G - The Trap Behind Kind Words
+
+You keep it secret. The person becomes controlling and pushes for offline meeting.
+
+Debrief:
+- Groomers build trust before control.
+- Secrecy is the biggest warning sign.
+
+[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="17" name="B1 Love Bombing" tags="" position="520,1040" size="140,120">[BGM: Soft romantic synth]
+
+U_look_gut: You are totally my type. I feel like we connect.
+
+[[Flirt back quickly-&gt;B2 Private Platform Push]]
+[[Keep neutral tone-&gt;B2 Private Platform Push]]
+[[Ignore message-&gt;B Safe Early Exit]]</tw-passagedata><tw-passagedata pid="18" name="B2 Private Platform Push" tags="" position="520,1200" size="140,120">U_look_gut: Move to Snapchat or Telegram. Messages disappear there.
+
+Narrator: Disappearing messages can still be recorded.
+
+[[Move platform-&gt;B3 Pressure Request]]
+[[Stay on CyberTok only-&gt;B3 Pressure Request]]
+[[Stop chatting-&gt;B Safe Early Exit]]</tw-passagedata><tw-passagedata pid="19" name="B3 Pressure Request" tags="" position="520,1360" size="140,120">U_look_gut: Send a private pic if you trust me.
+
+Narrator: Guilt and affection are being weaponized.
+
+[CRITICAL CHOICE]
+[[Send image under pressure-&gt;B BAD Ending]]
+[[Refuse, screenshot, block/report-&gt;B GOOD Resolution]]
+[[Tell trusted adult before responding-&gt;B GOOD Resolution]]</tw-passagedata><tw-passagedata pid="20" name="B Safe Early Exit" tags="" position="690,1200" size="140,120">System: SAFE RESOLUTION (EARLY)
+
+You decline the fast-intimacy trap and restrict contact.
+
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="21" name="B GOOD Resolution" tags="" position="690,1360" size="140,120">You screenshot threats, block the account, report in-app, and tell a trusted adult.
+
+System: SAFE RESOLUTION B - Extortion attempt disrupted.
+
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="22" name="B BAD Ending" tags="" position="520,1520" size="140,120">System: BAD ENDING B - Paying The Threat
+
+After one payment, another demand follows.
+
+Debrief:
+- Sextortion uses fear and urgency.
+- Paying increases future extortion risk.
+
+[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="23" name="S1 Easy Money Bait" tags="" position="900,1040" size="140,120">[BGM: Busy electronic rhythm]
+
+The_Si_Kamar: Student can earn RM200 daily. Easy work.
+
+[[Tell me more-&gt;S2 Urgency and Fake Proof]]
+[[I need to verify first-&gt;S2 Urgency and Fake Proof]]
+[[Ignore and report-&gt;S Safe Early Exit]]</tw-passagedata><tw-passagedata pid="24" name="S2 Urgency and Fake Proof" tags="" position="900,1200" size="140,120">The_Si_Kamar: Last day today. Slots almost full. See my proof screenshots.
+
+Narrator: Urgency reduces critical thinking.
+
+[[Continue quickly-&gt;S3 Credential Theft Request]]
+[[Ask parent before continuing-&gt;S GOOD Resolution]]
+[[Ask for registered company info-&gt;S3V Verification Fail]]</tw-passagedata><tw-passagedata pid="25" name="S3V Verification Fail" tags="" position="1060,1200" size="140,120">The_Si_Kamar: No need so formal. Trust me lah.
+
+Narrator: He avoids verifiable details.
+
+[[Proceed anyway-&gt;S3 Credential Theft Request]]
+[[Stop and report-&gt;S GOOD Resolution]]</tw-passagedata><tw-passagedata pid="26" name="S3 Credential Theft Request" tags="" position="900,1360" size="150,120">The_Si_Kamar: Send your Mum's bank card photo and TAC code.
+
+Narrator: Legitimate services do not ask for TAC/OTP.
+
+[CRITICAL CHOICE]
+[[Share TAC code-&gt;S BAD Ending]]
+[[Refuse, screenshot, report-&gt;S GOOD Resolution]]
+[[Tell parent immediately-&gt;S GOOD Resolution]]</tw-passagedata><tw-passagedata pid="27" name="S Safe Early Exit" tags="" position="1220,1200" size="140,120">System: SAFE RESOLUTION (EARLY)
+
+You report the scam entry point before account compromise.
+
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="28" name="S GOOD Resolution" tags="" position="1060,1360" size="140,120">You: Real jobs do not need stolen bank access. Reported.
+
+System: SAFE RESOLUTION S - Financial scam blocked.
+
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="29" name="S BAD Ending" tags="" position="900,1520" size="140,120">System: BAD ENDING S - One Code, Full Loss
+
+The account is drained and the scammer disappears.
+
+Debrief:
+- TAC and OTP are security keys.
+- Never share them with anyone.
+
+[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="30" name="C1 Bait Comment" tags="" position="1280,1040" size="140,120">[BGM: Low bass tension]
+
+BawangGirlzzz: Ew, cringe. Go back to Roblox.
+
+[[Reply angrily-&gt;C2 Dogpile Escalation]]
+[[Reply once, then stop-&gt;C2 Dogpile Escalation]]
+[[No reply, mute thread-&gt;C GOOD Resolution]]</tw-passagedata><tw-passagedata pid="31" name="C2 Dogpile Escalation" tags="" position="1280,1200" size="140,120">Narrator: Your photo is reposted as a meme. Strangers pile into comments and DMs.
+
+[[Post long angry defense-&gt;C BAD Ending]]
+[[Collect evidence quietly-&gt;C GOOD Resolution]]
+[[Ask parent or counselor for help now-&gt;C GOOD Resolution]]</tw-passagedata><tw-passagedata pid="32" name="C GOOD Resolution" tags="" position="1450,1200" size="140,120">You screenshot evidence, block the ringleader, report posts, and seek school/family support.
+
+System: SAFE RESOLUTION C - Harassment contained.
+
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="33" name="C BAD Ending" tags="" position="1280,1360" size="140,120">System: BAD ENDING C - Fed The Fire
+
+Rage replies are clipped and reposted, expanding harassment.
+
+Debrief:
+- Rage-bait harvests reactions as content.
+- Disengage, document, report, escalate.
+
+[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="34" name="End Hub" tags="" position="760,1760" size="160,120">[Background: Discord call with FaizTheGoat]
+
+Faiz: How was your first week on CyberTok?
+
+You: Messy. But I saw the red flags and acted.
+
+Choose your wrap-up:
+[[I blocked threats and asked for help early-&gt;GOOD ENDING]]
+[[I made some unsafe choices but want to recover-&gt;PARTIAL ENDING]]</tw-passagedata><tw-passagedata pid="35" name="GOOD ENDING" tags="" position="620,1920" size="160,120">System: GOOD ENDING - Think Before You Click
+
+Learning recap:
+- Grooming: kindness + secrecy + isolation
+- Sextortion: romance pressure + threats
+- Scam: urgency + fake proof + TAC theft
+- Bullying: provocation + amplification
+
+Final rule: Stop. Check. Share.
+
+[[Credits-&gt;Credits]]</tw-passagedata><tw-passagedata pid="36" name="PARTIAL ENDING" tags="" position="900,1920" size="160,120">System: PARTIAL ENDING - Recovery Starts Now
+
+Recovery actions:
+1. Save all evidence
+2. Block/report all accounts
+3. Inform trusted adult and school
+4. Contact official help channels
+
+[[Credits-&gt;Credits]]
+[[Restart story-&gt;Start]]</tw-passagedata><tw-passagedata pid="37" name="Restart Prompt" tags="" position="520,1840" size="150,120">System: You reached a bad ending.
+
+[[Return to route hub-&gt;Scene 03: Threat Hub]]
+[[Return to title screen-&gt;Start]]
+[[Open image checklist before replay-&gt;Image Checklist]]</tw-passagedata><tw-passagedata pid="38" name="Credits" tags="" position="760,2080" size="140,120">Narrator:
+Cyber safety is not one setting.
+It is a habit built in small decisions.
+
+When in doubt:
+Pause. Document. Report. Tell someone you trust.
+
+[[Play Again-&gt;Start]]
+[[Assets and upload guide-&gt;Assets Guide]]</tw-passagedata><tw-passagedata pid="39" name="Image Checklist" tags="" position="350,380" size="160,120">Image folders expected:
+- images/backgrounds/
+- images/characters/
+- images/ui/
+
+Minimum images to prepare:
+1. title_city_sunset.png
+2. bedroom_rain_desk.png
+3. profile_public_feed.png
+4. profile_private_lock.png
+5. notif_flood.png
+6. dm_groomer_chat.png
+7. dm_catfish_chat.png
+8. dm_scam_chat.png
+9. cyberbully_comments.png
+10. bad_ending_threat.png
+11. discord_call_evening.png
+12. credits_sunrise.png
+
+Upload link (replace this URL):
+https://example.com/upload-your-images-here
+
+[[Back to Assets Guide-&gt;Assets Guide]]
+[[Back to Start-&gt;Start]]</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
