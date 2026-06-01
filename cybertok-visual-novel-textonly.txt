@@ -153,10 +153,6 @@ body::after{
 .restart .btn{padding:14px 26px}
 
 
-.hero{width:100%;border-radius:14px;margin-bottom:14px;display:block;border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.45);animation:rise .5s ease both}
-.avatar-choice{width:30px;height:30px;border-radius:8px;object-fit:cover;flex-shrink:0;border:1px solid var(--line)}
-.choice img.avatar-choice{margin-top:-1px}
-.title-hero{width:100%;border-radius:18px;margin-bottom:16px;display:block}
 
 .fade{animation:fade .4s ease both}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -177,9 +173,6 @@ body::after{
 </div>
 
 <script>
-// Character images shown as file paths here for readability.
-  // (In the download version these are inlined as base64 so the file works standalone.)
-  const IMG = { "abangmer":"assets/abangmer.jpg", "bawang":"assets/bawang.jpg", "sikamar":"assets/sikamar.jpg", "ulookgut":"assets/ulookgut.jpg" };
 const stage = document.getElementById('stage');
 const dayPill = document.getElementById('dayPill');
 const bgmText = document.getElementById('bgmText');
@@ -202,14 +195,6 @@ function render(scene){
     stage.appendChild(st);
   }
 
-  if(scene.hero){
-    const img = document.createElement('img');
-    img.className = scene.heroClass || 'hero';
-    img.src = IMG[scene.hero];
-    img.alt = '';
-    stage.appendChild(img);
-  }
-
   const chat = document.createElement('div');
   chat.className='chat';
   (scene.lines||[]).forEach((l,i)=>{
@@ -222,15 +207,6 @@ function render(scene){
     chat.appendChild(m);
   });
   stage.appendChild(chat);
-
-  if(scene.heroBottom){
-    const img2 = document.createElement('img');
-    img2.className = scene.heroBottomClass || 'hero';
-    img2.src = IMG[scene.heroBottom];
-    img2.alt = '';
-    img2.style.marginTop = '14px';
-    stage.appendChild(img2);
-  }
 
   if(scene.input){
     const f = document.createElement('div'); f.className='field';
@@ -255,8 +231,7 @@ function render(scene){
     scene.choices.forEach(ch=>{
       const btn = document.createElement('button');
       btn.className = 'choice ' + (ch.kind||'');
-      const thumb = ch.img ? `<img class="avatar-choice" src="${IMG[ch.img]}" alt="">` : '';
-      btn.innerHTML = `<span class="tag">${ch.tag}</span>${thumb}<span>${ch.text}</span>`;
+      btn.innerHTML = `<span class="tag">${ch.tag}</span><span>${ch.text}</span>`;
       btn.onclick = ch.next;
       c.appendChild(btn);
     });
@@ -267,7 +242,6 @@ function render(scene){
     const e = document.createElement('div');
     e.className = 'ending ' + (scene.ending.good?'good':'bad');
     e.innerHTML = `
-      ${scene.ending.hero?`<img class="hero" src="${IMG[scene.ending.hero]}" alt="">`:''}
       <div class="badge">${scene.ending.badge}</div>
       <h2>${scene.ending.title}</h2>
       ${scene.ending.body.map(p=>`<p>${p.replaceAll('{u}',state.username)}</p>`).join('')}
@@ -342,10 +316,10 @@ function routeHub(){
       {type:'sys', text:'Choose who messages you first.'}
     ],
     choices:[
-      {tag:'1', img:'abangmer', text:'<b>@AbangMer.11</b>', next: groomerIntro },
-      {tag:'2', img:'sikamar', text:'<b>@The_Si_Kamar</b>', next: scammerIntro },
-      {tag:'3', img:'bawang', text:'<b>@BawangGirlzzz</b>', next: bullyIntro },
-      {tag:'4', img:'ulookgut', text:'<b>@U_look_gut</b>', next: catfishIntro }
+      {tag:'1', text:'<b>@AbangMer.11</b>', next: groomerIntro },
+      {tag:'2', text:'<b>@The_Si_Kamar</b>', next: scammerIntro },
+      {tag:'3', text:'<b>@BawangGirlzzz</b>', next: bullyIntro },
+      {tag:'4', text:'<b>@U_look_gut</b>', next: catfishIntro }
     ]
   });
 }
@@ -355,7 +329,6 @@ function groomerIntro(){
   render({
     day:"DAY 1", bgm:"Soft, comforting acoustic guitar",
     sceneTitle:"Route 1 · The Gamer",
-    hero:"abangmer",
     lines:[
       {type:'them', who:'@AbangMer.11', text:'Hey bro! Saw your post. I\'m a Mythic ranked player in MLBB. Your build\'s not bad, but I can carry you to Glory if you want? Free of charge, just looking for gaming buddies.'},
       {type:'you', who:'You', text:'Eh, seriously? Legend player here, keep getting lose streaks from bad random teammates. Let\'s go!'},
@@ -406,7 +379,6 @@ function scammerIntro(){
   render({
     day:"DAY 1", bgm:"Fast-paced, jazzy, confusing electronic music",
     sceneTitle:"Route 2 · The Offer",
-    hero:"sikamar",
     lines:[
       {type:'them', who:'@The_Si_Kamar', text:'Yo boss! Saja nak tegur. Nice laptop! Setup padu gila. Instead of just watching videos, you want to make some easy side income or not? Masyuk RM200 daily.'},
       {type:'you', who:'You', text:'Can a 14-year-old even do this? Is it legal?'},
@@ -456,7 +428,6 @@ function bullyIntro(){
   render({
     day:"DAY 1", bgm:"Low, heavy, tense bass drones",
     sceneTitle:"Route 3 · The Comment",
-    hero:"bawang",
     lines:[
       {type:'them', who:'@BawangGirlzzz', text:'Ew, what am I even looking at?? Kids nowadays so cringey. @' + state.username + ' thinks they\'re all that? Go back to Roblox lah kid. 💀🤡'},
       {type:'you', who:'You', text:'If you don\'t like it, just swipe away. Why do you need to be toxic?'}
@@ -505,7 +476,6 @@ function catfishIntro(){
   render({
     day:"DAY 1", bgm:"Seductive, slow, romance-style music",
     sceneTitle:"Route 4 · The Charmer",
-    hero:"ulookgut",
     lines:[
       {type:'them', who:'@U_look_gut', text:'Hey there… saw your profile. You have such an aesthetic vibe. Honestly, you\'re totally my type. Can we chat?'},
       {type:'you', who:'You', text:'W-wow, r-really??'},
