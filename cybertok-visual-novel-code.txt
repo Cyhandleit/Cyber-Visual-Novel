@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberTok — A Visual Novel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a12;
+  --panel:#13131f;
+  --panel-2:#1b1b2c;
+  --ink:#eef0ff;
+  --muted:#9aa0c4;
+  --accent:#ff3d7f;
+  --accent-2:#37e6c4;
+  --warn:#ffcc4d;
+  --danger:#ff4d4d;
+  --line:rgba(255,255,255,.08);
+  --bubble-them:#23233a;
+  --bubble-you:#2a1b3d;
+  --good:#37e6c4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Outfit',sans-serif;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(255,61,127,.12), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(55,230,196,.10), transparent 60%),
+    var(--bg);
+  color:var(--ink);
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:24px 16px 60px;
+  overflow-x:hidden;
+}
+/* grain overlay */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.app{width:100%;max-width:520px;display:flex;flex-direction:column;gap:18px}
+
+/* ---- top bar ---- */
+.bar{
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(90deg,var(--accent),#7b2dff);
+  border-radius:18px;padding:14px 18px;
+  box-shadow:0 10px 40px rgba(123,45,255,.25);
+}
+.logo{font-weight:800;letter-spacing:-.5px;font-size:20px;display:flex;align-items:center;gap:8px}
+.logo small{font-family:'Space Mono',monospace;font-weight:400;opacity:.8;font-size:11px}
+.day-pill{
+  font-family:'Space Mono',monospace;font-size:12px;font-weight:700;
+  background:rgba(0,0,0,.25);padding:6px 12px;border-radius:999px;
+}
+
+/* ---- bgm strip ---- */
+.bgm{
+  font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);
+  display:flex;align-items:center;gap:8px;padding:0 4px;
+}
+.bgm .eq{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+.bgm .eq span{width:3px;background:var(--accent-2);border-radius:2px;animation:eq 1s infinite ease-in-out}
+.bgm .eq span:nth-child(2){animation-delay:.2s}
+.bgm .eq span:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+
+/* ---- stage ---- */
+.stage{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:20px;
+  min-height:280px;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  animation:rise .5s ease both;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.scene-title{
+  font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--accent-2);margin-bottom:14px;
+}
+
+/* chat bubbles */
+.chat{display:flex;flex-direction:column;gap:12px}
+.msg{max-width:85%;padding:12px 15px;border-radius:18px;font-size:15px;line-height:1.45;animation:pop .35s ease both}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(6px)}to{opacity:1;transform:none}}
+.msg .who{font-size:11px;font-family:'Space Mono',monospace;opacity:.7;margin-bottom:4px;display:block}
+.them{background:var(--bubble-them);align-self:flex-start;border-bottom-left-radius:5px}
+.you{background:linear-gradient(135deg,#3a2150,#2a1b3d);align-self:flex-end;border-bottom-right-radius:5px}
+.sys{align-self:center;text-align:center;background:transparent;border:1px dashed var(--line);color:var(--muted);font-family:'Space Mono',monospace;font-size:12px;max-width:100%}
+.narr{align-self:stretch;max-width:100%;background:var(--panel-2);color:var(--ink);font-style:normal;border-left:3px solid var(--accent);font-size:14px;color:var(--muted)}
+.sfx{align-self:center;color:var(--danger);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* choices */
+.choices{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.choice{
+  text-align:left;width:100%;cursor:pointer;
+  background:var(--panel-2);border:1px solid var(--line);
+  color:var(--ink);padding:14px 16px;border-radius:14px;font-size:14.5px;
+  font-family:'Outfit',sans-serif;transition:.18s;line-height:1.4;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.choice .tag{
+  font-family:'Space Mono',monospace;font-weight:700;font-size:12px;
+  background:var(--accent);color:#fff;border-radius:7px;padding:2px 8px;flex-shrink:0;margin-top:1px;
+}
+.choice:hover{border-color:var(--accent);transform:translateX(4px);background:#211432}
+.choice.safe .tag{background:var(--accent-2);color:#05231d}
+.choice.risk .tag{background:var(--danger)}
+
+/* username input */
+.field{display:flex;gap:8px;margin-top:16px}
+.field input{
+  flex:1;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;
+  padding:14px 16px;color:var(--ink);font-size:15px;font-family:'Outfit',sans-serif;outline:none;
+}
+.field input:focus{border-color:var(--accent-2)}
+.btn{
+  background:var(--accent);color:#fff;border:none;border-radius:12px;padding:0 20px;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:.18s;
+}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* ending */
+.ending{text-align:center;padding:14px 4px}
+.ending h2{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.ending .badge{
+  font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;
+  padding:6px 14px;border-radius:999px;display:inline-block;margin-bottom:16px;
+}
+.ending.good h2{color:var(--good)}
+.ending.good .badge{background:rgba(55,230,196,.15);color:var(--good);border:1px solid rgba(55,230,196,.4)}
+.ending.bad h2{color:var(--danger)}
+.ending.bad .badge{background:rgba(255,77,77,.12);color:var(--danger);border:1px solid rgba(255,77,77,.35)}
+.ending p{color:var(--muted);font-size:14.5px;line-height:1.6;text-align:left;margin:0 auto 14px;max-width:440px}
+.lesson{
+  background:var(--panel-2);border:1px solid var(--line);border-radius:14px;
+  padding:16px;text-align:left;font-size:13.5px;line-height:1.55;color:var(--ink);margin-top:8px;
+}
+.lesson b{color:var(--accent-2)}
+
+.restart{margin-top:20px}
+.restart .btn{padding:14px 26px}
+
+
+.hero{width:100%;border-radius:14px;margin-bottom:14px;display:block;border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.45);animation:rise .5s ease both}
+.avatar-choice{width:30px;height:30px;border-radius:8px;object-fit:cover;flex-shrink:0;border:1px solid var(--line)}
+.choice img.avatar-choice{margin-top:-1px}
+.title-hero{width:100%;border-radius:18px;margin-bottom:16px;display:block}
+
+.fade{animation:fade .4s ease both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.hint{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <div class="logo">CyberTok <small>MY · v2026.5</small></div>
+    <div class="day-pill" id="dayPill">DAY 1</div>
+  </div>
+  <div class="bgm" id="bgm">
+    <span class="eq"><span></span><span></span><span></span></span>
+    <span id="bgmText">Upbeat, cheerful lo-fi anime music</span>
+  </div>
+  <div class="stage" id="stage"></div>
+</div>
+
+<script>
+// Character images shown as file paths here for readability.
+  // (In the download version these are inlined as base64 so the file works standalone.)
+  const IMG = { "abangmer":"assets/abangmer.jpg", "bawang":"assets/bawang.jpg", "sikamar":"assets/sikamar.jpg", "ulookgut":"assets/ulookgut.jpg" };
+const stage = document.getElementById('stage');
+const dayPill = document.getElementById('dayPill');
+const bgmText = document.getElementById('bgmText');
+
+let state = { username: "you", privacy: "", post: "" };
+
+function setDay(d){ dayPill.textContent = d; }
+function setBGM(t){ bgmText.textContent = t; }
+
+// render a list of "lines" then a choice block
+function render(scene){
+  stage.innerHTML = "";
+  stage.classList.remove('fade'); void stage.offsetWidth; stage.classList.add('fade');
+  if(scene.day) setDay(scene.day);
+  if(scene.bgm) setBGM(scene.bgm);
+
+  if(scene.sceneTitle){
+    const st = document.createElement('div');
+    st.className='scene-title'; st.textContent=scene.sceneTitle;
+    stage.appendChild(st);
+  }
+
+  if(scene.hero){
+    const img = document.createElement('img');
+    img.className = scene.heroClass || 'hero';
+    img.src = IMG[scene.hero];
+    img.alt = '';
+    stage.appendChild(img);
+  }
+
+  const chat = document.createElement('div');
+  chat.className='chat';
+  (scene.lines||[]).forEach((l,i)=>{
+    const m = document.createElement('div');
+    m.className = 'msg ' + l.type;
+    let text = l.text.replaceAll('{u}', state.username);
+    if(l.who){ m.innerHTML = `<span class="who">${l.who}</span>${text}`; }
+    else { m.innerHTML = text; }
+    m.style.animationDelay = (i*0.06)+'s';
+    chat.appendChild(m);
+  });
+  stage.appendChild(chat);
+
+  if(scene.heroBottom){
+    const img2 = document.createElement('img');
+    img2.className = scene.heroBottomClass || 'hero';
+    img2.src = IMG[scene.heroBottom];
+    img2.alt = '';
+    img2.style.marginTop = '14px';
+    stage.appendChild(img2);
+  }
+
+  if(scene.input){
+    const f = document.createElement('div'); f.className='field';
+    const inp = document.createElement('input');
+    inp.placeholder = scene.input.placeholder; inp.maxLength=24;
+    const b = document.createElement('button'); b.className='btn'; b.textContent='Create';
+    b.onclick = ()=>{
+      let v = inp.value.trim().replace(/^@+/,'');
+      if(!v) return;
+      state.username = v; scene.input.next();
+    };
+    inp.addEventListener('keydown',e=>{ if(e.key==='Enter') b.click(); });
+    f.appendChild(inp); f.appendChild(b);
+    stage.appendChild(f);
+    const h=document.createElement('div'); h.className='hint'; h.textContent='@'+'your_handle — pick anything';
+    stage.appendChild(h);
+    inp.focus();
+  }
+
+  if(scene.choices){
+    const c = document.createElement('div'); c.className='choices';
+    scene.choices.forEach(ch=>{
+      const btn = document.createElement('button');
+      btn.className = 'choice ' + (ch.kind||'');
+      const thumb = ch.img ? `<img class="avatar-choice" src="${IMG[ch.img]}" alt="">` : '';
+      btn.innerHTML = `<span class="tag">${ch.tag}</span>${thumb}<span>${ch.text}</span>`;
+      btn.onclick = ch.next;
+      c.appendChild(btn);
+    });
+    stage.appendChild(c);
+  }
+
+  if(scene.ending){
+    const e = document.createElement('div');
+    e.className = 'ending ' + (scene.ending.good?'good':'bad');
+    e.innerHTML = `
+      ${scene.ending.hero?`<img class="hero" src="${IMG[scene.ending.hero]}" alt="">`:''}
+      <div class="badge">${scene.ending.badge}</div>
+      <h2>${scene.ending.title}</h2>
+      ${scene.ending.body.map(p=>`<p>${p.replaceAll('{u}',state.username)}</p>`).join('')}
+      ${scene.ending.lesson?`<div class="lesson">${scene.ending.lesson}</div>`:''}
+      <div class="restart"><button class="btn" onclick="START()">↺ Play Again</button></div>
+    `;
+    stage.appendChild(e);
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ============ SCENES ============ */
+
+function START(){
+  state = { username:"you", privacy:"", post:"" };
+  render({
+    day:"DAY 1", bgm:"Upbeat, cheerful lo-fi anime music",
+    sceneTitle:"Prologue · Setup",
+    lines:[
+      {type:'sys', text:'Welcome to CyberTok Malaysia (v2026.5). Please initialize your profile.'},
+      {type:'you', who:'You', text:'Wah, finally my own laptop! No more sharing with Mum. Let me make an account before Faiz finishes his Cybersecurity class. What should my username be?'}
+    ],
+    input:{ placeholder:'Enter username…', next: privacyChoice }
+  });
+}
+
+function privacyChoice(){
+  render({
+    sceneTitle:"Choice 1 · Privacy",
+    lines:[
+      {type:'narr', text:`Account created as <b style="color:var(--accent-2)">@${state.username}</b>. CyberTok is asking about security. You're waiting for your friend <b>FaizTheGoat</b> to follow you…`}
+    ],
+    choices:[
+      {tag:'A', kind:'risk', text:'<b>Public.</b> Keep account public, DMs open to everyone. Faiz will find me easily!', next:()=>{ state.privacy='public'; postChoice(); }},
+      {tag:'B', kind:'safe', text:'<b>Private.</b> Set account to private, DMs from followers only.', next:()=>{ state.privacy='private'; privateWarn(); }}
+    ]
+  });
+}
+
+function privateWarn(){
+  render({
+    sceneTitle:"Choice 1 · Private",
+    lines:[
+      {type:'narr', text:`You chose a <b>private</b> account — but don't get too comfortable…`},
+      {type:'narr', text:`Three follow requests appear from aesthetic avatars: <b>@U_look_gut</b>, <b>@HafizGamerz67</b>, <b>@AbangMer.11</b>. You don't know them, but you want to look popular before Faiz adds you… so you hit <b>Accept</b>. The barrier is broken.`}
+    ],
+    choices:[
+      {tag:'›', text:'Continue', next: postChoice }
+    ]
+  });
+}
+
+function postChoice(){
+  render({
+    sceneTitle:"Choice 2 · First Post",
+    lines:[
+      {type:'you', who:'You', text:'Now for my very first post. I want to look active so Faiz can find me easily.'}
+    ],
+    choices:[
+      {tag:'A', kind:'risk', text:'<b>The OOTD.</b> Mirror selfie in your school uniform. <i>"Bored after school at SMK Damai. Anyone down for MLBB?"</i>', next: routeHub },
+      {tag:'B', kind:'safe', text:'<b>The Setup.</b> Photo of your new laptop. <i>"Rate my setup! On the road to Mythical in MLBB!"</i>', next: routeHub }
+    ]
+  });
+}
+
+// Hub: pick which predator route to experience
+function routeHub(){
+  render({
+    sceneTitle:"The Internet Awaits",
+    lines:[
+      {type:'narr', text:`Your post is live. Notifications start buzzing. Four strangers slide into your world. <b>Survive them all and Faiz arrives for the good ending.</b> Fall for any one… and the story turns dark.`},
+      {type:'sys', text:'Choose who messages you first.'}
+    ],
+    choices:[
+      {tag:'1', img:'abangmer', text:'<b>@AbangMer.11</b>', next: groomerIntro },
+      {tag:'2', img:'sikamar', text:'<b>@The_Si_Kamar</b>', next: scammerIntro },
+      {tag:'3', img:'bawang', text:'<b>@BawangGirlzzz</b>', next: bullyIntro },
+      {tag:'4', img:'ulookgut', text:'<b>@U_look_gut</b>', next: catfishIntro }
+    ]
+  });
+}
+
+/* ---------- ROUTE 1: GROOMER ---------- */
+function groomerIntro(){
+  render({
+    day:"DAY 1", bgm:"Soft, comforting acoustic guitar",
+    sceneTitle:"Route 1 · The Gamer",
+    hero:"abangmer",
+    lines:[
+      {type:'them', who:'@AbangMer.11', text:'Hey bro! Saw your post. I\'m a Mythic ranked player in MLBB. Your build\'s not bad, but I can carry you to Glory if you want? Free of charge, just looking for gaming buddies.'},
+      {type:'you', who:'You', text:'Eh, seriously? Legend player here, keep getting lose streaks from bad random teammates. Let\'s go!'},
+      {type:'them', who:'@AbangMer.11', text:'No luck with teammates, huh? How old are you? If you\'re young, that\'s to be expected.'},
+      {type:'you', who:'You', text:'I\'m not that young. I\'m 14.'},
+      {type:'them', who:'@AbangMer.11', text:'14?? Cool, we\'re closer in age then! I\'m 15. Here, let me give you my gamer ID.'},
+      {type:'narr', text:'You exchange gamer IDs. His profile seems legit. You start playing MLBB together after school.'}
+    ],
+    choices:[{tag:'›', text:'Day 4 →', next: groomerD4 }]
+  });
+}
+function groomerD4(){
+  render({
+    day:"DAY 4", sceneTitle:"Route 1 · Building Trust",
+    lines:[
+      {type:'them', who:'@AbangMer.11', text:'Good games today! By the way, you sounded kinda stressed on the mic. Everything okay at home?'},
+      {type:'you', who:'You', text:'Yeah… my dad yelled at me because I didn\'t get straight A\'s. He threatened to take away my new laptop.'},
+      {type:'them', who:'@AbangMer.11', text:'Man, I feel you. Parents just don\'t understand the pressure we face. I\'m 15, I totally get it. You can always talk to me when you feel down. I\'ve got your back, adik.'}
+    ],
+    choices:[{tag:'›', text:'Day 8 →', next: groomerD8 }]
+  });
+}
+function groomerD8(){
+  render({
+    day:"DAY 8", sceneTitle:"Route 1 · Isolation",
+    lines:[
+      {type:'them', who:'@AbangMer.11', text:'Hey, you shouldn\'t hang out with that Faiz guy so much. He didn\'t even defend your post when people teased you. He\'s not appreciating you like I do…'},
+      {type:'you', who:'You', text:'(thinking) Wow, Abang Mer is right. He\'s more supportive than my real-life friends.'}
+    ],
+    choices:[{tag:'›', text:'Day 14 →', next: groomerCritical }]
+  });
+}
+function groomerCritical(){
+  render({
+    day:"DAY 14", sceneTitle:"Route 1 · Critical Choice",
+    lines:[
+      {type:'them', who:'@AbangMer.11', text:'Listen, my parents are tracking my CyberTok. We\'ve known each other a while — easier if we talk on Telegram instead? Let\'s keep our chat a total secret, okay? Move over and I\'ll transfer 1,000 diamonds right now. Just don\'t tell your parents, they\'ll make a big deal out of nothing.'}
+    ],
+    choices:[
+      {tag:'A', kind:'risk', text:'<b>Accept.</b> "Sure, Abang! Let\'s move to Telegram. Our little secret. 🤫"', next: badGroomer },
+      {tag:'B', kind:'safe', text:'<b>Reject.</b> "Wait, why must it be a secret? True friends don\'t ask me to hide things from my family. Blocked."', next:()=> redFlag('groomer') }
+    ]
+  });
+}
+
+/* ---------- ROUTE 2: SCAMMER ---------- */
+function scammerIntro(){
+  render({
+    day:"DAY 1", bgm:"Fast-paced, jazzy, confusing electronic music",
+    sceneTitle:"Route 2 · The Offer",
+    hero:"sikamar",
+    lines:[
+      {type:'them', who:'@The_Si_Kamar', text:'Yo boss! Saja nak tegur. Nice laptop! Setup padu gila. Instead of just watching videos, you want to make some easy side income or not? Masyuk RM200 daily.'},
+      {type:'you', who:'You', text:'Can a 14-year-old even do this? Is it legal?'},
+      {type:'them', who:'@The_Si_Kamar', text:'Relax bro, ini zaman digital. No age limit one. Just simple affiliate data typing. Very easy, work from your own bed. I can send you proof also.'}
+    ],
+    choices:[{tag:'›', text:'Day 3 →', next: scammerD3 }]
+  });
+}
+function scammerD3(){
+  render({
+    day:"DAY 3", sceneTitle:"Route 2 · False Proof",
+    lines:[
+      {type:'narr', text:'He sends screenshots of edited bank statements.'},
+      {type:'them', who:'@The_Si_Kamar', text:'Look at this Form 2 kid from Kedah. Under my guidance he already bought his own gaming chair. I want to help our local youth become independent. Don\'t rely on parents\' pocket money.'},
+      {type:'you', who:'You', text:'(thinking) He seems genuinely helpful. It\'d be amazing to buy my own things and help Mum with groceries.'}
+    ],
+    choices:[{tag:'›', text:'Day 5 →', next: scammerD5 }]
+  });
+}
+function scammerD5(){
+  render({
+    day:"DAY 5", sceneTitle:"Route 2 · Urgency",
+    lines:[
+      {type:'them', who:'@The_Si_Kamar', text:'Bro, the slot is almost full. Today\'s the last day for student registration. Miss this and the slot goes to a Form 5 student. You want or not?'},
+      {type:'you', who:'You', text:'Wait, I want to ask my Mum first.'},
+      {type:'them', who:'@The_Si_Kamar', text:'I thought you wanna be independent? Ask your Mum and how you gonna surprise her with money later? You big boy already. 14 already. Decide on your ownlah. No need Mum.'},
+      {type:'you', who:'You', text:'Hmmm… okay, I want it.'}
+    ],
+    choices:[{tag:'›', text:'Day 7 →', next: scammerCritical }]
+  });
+}
+function scammerCritical(){
+  render({
+    day:"DAY 7", sceneTitle:"Route 2 · Critical Choice",
+    lines:[
+      {type:'them', who:'@The_Si_Kamar', text:'Okay, your system is ready! To deposit your first RM200 commission, I need to link your profile to an active bank account. No card? Just snap a pic of your Mum\'s bank card. A verification SMS (TAC code) goes to her phone — type the number here quickly so the system can release your money!'}
+    ],
+    choices:[
+      {tag:'A', kind:'risk', text:'<b>Give the TAC code.</b> "Let me grab Mum\'s phone while she showers. She\'ll be so proud!"', next: badScammer },
+      {tag:'B', kind:'safe', text:'<b>Reject.</b> "Never give out bank card details or TAC codes. This is phishing. Report!"', next:()=> redFlag('scammer') }
+    ]
+  });
+}
+
+/* ---------- ROUTE 3: BULLY ---------- */
+function bullyIntro(){
+  render({
+    day:"DAY 1", bgm:"Low, heavy, tense bass drones",
+    sceneTitle:"Route 3 · The Comment",
+    hero:"bawang",
+    lines:[
+      {type:'them', who:'@BawangGirlzzz', text:'Ew, what am I even looking at?? Kids nowadays so cringey. @' + state.username + ' thinks they\'re all that? Go back to Roblox lah kid. 💀🤡'},
+      {type:'you', who:'You', text:'If you don\'t like it, just swipe away. Why do you need to be toxic?'}
+    ],
+    choices:[{tag:'›', text:'Day 3 →', next: bullyD3 }]
+  });
+}
+function bullyD3(){
+  render({
+    day:"DAY 3", sceneTitle:"Route 3 · The Pile-On",
+    lines:[
+      {type:'them', who:'@BawangGirlzzz', text:'Oh look, the little baby is crying! Let\'s give them some real attention.'},
+      {type:'narr', text:'She crops your face onto a humiliating meme and posts it to a "CyberTok Kantoi" drama page with 15k followers, then floods your comments.'},
+      {type:'them', who:'@BawangGirlzzz', text:'It\'s giving "I am 14 and this is deep." 🤡🤡🤡 I hope you get bullied at school.'}
+    ],
+    choices:[{tag:'›', text:'Day 4 →', next: bullyD4 }]
+  });
+}
+function bullyD4(){
+  render({
+    day:"DAY 4", sceneTitle:"Route 3 · It Goes Viral",
+    lines:[
+      {type:'narr', text:'Your notification feed explodes. Random accounts spam your DMs.'},
+      {type:'them', who:'@Account_99', text:'Lmao look at this cringe kid.'},
+      {type:'them', who:'@Remit_Boy', text:'Embarrassing your school badge only. Go delete your life.'},
+      {type:'narr', text:'Your post has gone viral. It\'s a matter of time before someone you know finds out.'}
+    ],
+    choices:[{tag:'›', text:'Day 6 →', next: bullyCritical }]
+  });
+}
+function bullyCritical(){
+  render({
+    day:"DAY 6", sceneTitle:"Route 3 · Critical Choice",
+    lines:[
+      {type:'narr', text:'Your stomach is knotted. You can\'t sleep. Every vibration makes your heart race. 3 AM, bloodshot eyes, staring at the screen. You can\'t take it anymore.'}
+    ],
+    choices:[
+      {tag:'A', kind:'risk', text:'<b>Fight back online.</b> Type long angry paragraphs defending yourself and insulting them back.', next: badBully },
+      {tag:'B', kind:'safe', text:'<b>Disengage.</b> Screenshot the ringleader for evidence, turn off notifications, block them all, and talk to your parents or school counselor.', next:()=> redFlag('bully') }
+    ]
+  });
+}
+
+/* ---------- ROUTE 4: CATFISH / BLACKMAIL ---------- */
+function catfishIntro(){
+  render({
+    day:"DAY 1", bgm:"Seductive, slow, romance-style music",
+    sceneTitle:"Route 4 · The Charmer",
+    hero:"ulookgut",
+    lines:[
+      {type:'them', who:'@U_look_gut', text:'Hey there… saw your profile. You have such an aesthetic vibe. Honestly, you\'re totally my type. Can we chat?'},
+      {type:'you', who:'You', text:'W-wow, r-really??'},
+      {type:'them', who:'@U_look_gut', text:'Yes, dummy. My school is near yours ;) If we get to know each other more, maybe we should meet up one day.'},
+      {type:'you', who:'You', text:'(thinking) Someone this attractive wants to talk to me? I feel incredibly flattered.'}
+    ],
+    choices:[{tag:'›', text:'Day 4 →', next: catfishD4 }]
+  });
+}
+function catfishD4(){
+  render({
+    day:"DAY 4", sceneTitle:"Route 4 · Love-Bombing",
+    lines:[
+      {type:'them', who:'@U_look_gut', text:'I love talking to you. You\'re so different from other guys/girls. Let\'s move to Snapchat or Telegram. It\'s safer there — messages disappear automatically. No one else needs to see our private conversations.'},
+      {type:'narr', text:'It feels like a secret romance movie. Sweet morning texts, compliments every hour.'}
+    ],
+    choices:[{tag:'›', text:'Day 8 →', next: catfishCritical }]
+  });
+}
+function catfishCritical(){
+  render({
+    day:"DAY 8", sceneTitle:"Route 4 · The Pressure",
+    lines:[
+      {type:'them', who:'@U_look_gut', text:'I\'m feeling really lonely tonight… can you prove you actually love me? Send me a private, revealing photo. Just a quick mirror selfie. Don\'t you trust me? It deletes automatically anyway.'},
+      {type:'you', who:'You', text:'Erk, I do like you but I don\'t really feel comfortable doing that…'},
+      {type:'them', who:'@U_look_gut', text:'So you don\'t love me? 😢'}
+    ],
+    choices:[
+      {tag:'A', kind:'risk', text:'<b>Give in.</b> You feel intense pressure. You don\'t want to lose this amazing person. (Send the photo.)', next: catfishTrap },
+      {tag:'B', kind:'safe', text:'<b>Stand firm & report.</b> "True love never pressures me like this. Screenshot, block, do NOT send. Tell my parents."', next:()=> redFlag('catfish') }
+    ]
+  });
+}
+function catfishTrap(){
+  render({
+    day:"DAY 8", sceneTitle:"Route 4 · The Trap",
+    lines:[
+      {type:'sfx', text:'⚡ LOUD STATIC — BGM CUTS OUT ⚡'},
+      {type:'them', who:'@U_look_gut', text:'Perfect. I just recorded your disappearing photo with another phone camera. Now listen carefully, kid. Transfer RM500 via Touch \'n Go to this number in 10 minutes. If you don\'t, this goes to your school\'s PIBG Facebook group and your family. Your life is over.'}
+    ],
+    choices:[
+      {tag:'A', kind:'risk', text:'<b>Pay the money.</b> "Please don\'t! I\'ll transfer my savings now, just delete it!"', next: badCatfish },
+      {tag:'B', kind:'safe', text:'<b>Stand firm & report.</b> "You\'re a criminal. Pay you and you\'ll just blackmail me again." Screenshot, block, do NOT pay, call Cyber999 & tell your parents.', next:()=> redFlag('catfish') }
+    ]
+  });
+}
+
+/* ---------- RED FLAG INTERSTITIAL (safe choice) ---------- */
+function redFlag(route){
+  render({
+    bgm:"Tense sting resolving to calm",
+    sceneTitle:"Red Flag Detected",
+    lines:[
+      {type:'sys', text:'⚑ You spotted the warning signs and stopped.'},
+      {type:'narr', text:`Instead of reacting, you took screenshots, blocked the account, and saved the evidence. Smart move — calm beats panic every time.`}
+    ],
+    choices:[{tag:'›', text:'Save evidence & continue', next:()=> evidenceSaved(route) }]
+  });
+}
+function evidenceSaved(route){
+  render({
+    sceneTitle:"Evidence Secured",
+    lines:[
+      {type:'narr', text:`Screenshots saved. In Malaysia you can report online harm to <b>Cyber999</b> (1-300-88-2999 / cyber999.my) or talk to a trusted adult or <b>Talian Kasih 15999</b>. Now… your phone buzzes. It's Faiz.`}
+    ],
+    choices:[{tag:'›', text:'Answer Faiz', next:()=> survived(route) }]
+  });
+}
+
+/* ---------- SURVIVAL → GOOD ENDING ---------- */
+function survived(route){
+  const lines = {
+    groomer:{
+      you:'Some guy tried to act like a sweet older brother to get me into secret private chats!',
+      faiz:'Fuh, lucky you didn\'t lay out your trust! That\'s a classic <b>Grooming Tactic</b> — gifts and gaming to build emotional dependency, exploiting your frustration with parents, then isolating you onto Telegram. <b>True friends don\'t ask for secrets!</b>'
+    },
+    scammer:{
+      you:'A scammer tried to trick me into giving up my Mum\'s bank details for a fake job!',
+      faiz:'Good call! That\'s <b>Phishing & Social Engineering</b> — flattery and fake earnings to exploit a teen\'s wish to be independent, then artificial urgency so you act before thinking. <b>Real jobs never ask for TAC codes or parents\' bank data!</b>'
+    },
+    bully:{
+      you:'A bunch of toxic trolls tried to bait me into a massive online flame war!',
+      faiz:'Wise choice. Trolls survive on <b>Rage-Baiting</b> — your anger is the content they amplify. By disengaging, you starved them of the attention they crave!'
+    },
+    catfish:{
+      you:'A catfish tried to romance me and blackmail me into sending explicit photos!',
+      faiz:'Bro, my lecturer covered this today! A <b>Sextortion Scam</b> — Love-Bombing to lower your guard, then "safe" disappearing apps. The moment you send a photo they weaponize fear. <b>If you pay, they never stop.</b>'
+    }
+  }[route];
+
+  render({
+    bgm:"Upbeat, triumphant anime orchestral music",
+    sceneTitle:"Good Ending · Faiz Arrives",
+    lines:[
+      {type:'sys', text:'🔊 Discord join-call sound'},
+      {type:'them', who:'FaizTheGoat', text:`Yo @${state.username}! Sorry I\'m late, my Cybersecurity class ran way over. You set up your CyberTok?`},
+      {type:'you', who:'You', text:'Bro… you wouldn\'t believe the insane stuff that happened to me this week.'},
+      {type:'them', who:'FaizTheGoat', text:'Kenapa bro? What happened?'},
+      {type:'you', who:'You', text:lines.you},
+      {type:'them', who:'FaizTheGoat', text:'Gila ah! Did you fall for it?!'},
+      {type:'you', who:'You', text:'No way, bro. I saw the red flags. I blocked them, protected my data, and reported them. A private account is just a door — you still have to watch who you let walk through it.'},
+      {type:'them', who:'FaizTheGoat', text:lines.faiz},
+      {type:'you', who:'You', text:'Oof, seems like your Cybersecurity class is paying off!'},
+      {type:'them', who:'FaizTheGoat', text:'Heh. Anyway, lesson learnt. Let\'s play MLBB! 🎮'}
+    ],
+    ending:{
+      good:true, badge:'GOOD ENDING', title:'You Stayed Safe 🛡️',
+      body:[`You spotted every red flag and kept yourself — and your family — safe. Faiz finally followed you, and you both jumped into a game.`],
+      lesson:`<b>What you got right:</b> you didn\'t move chats to secret apps, you never shared private photos or financial info, you didn\'t feed the trolls, and you told a trusted adult. In Malaysia you can report online harm to <b>Cyber999</b> (call 1-300-88-2999 / cyber999.my) or talk to <b>Talian Kasih 15999</b>.`
+    }
+  });
+}
+
+/* ---------- BAD ENDINGS ---------- */
+function badGroomer(){
+  render({
+    bgm:"Heavy, suffocating, ambient static noise",
+    sceneTitle:"Bad Ending 1 / 4",
+    ending:{
+      good:false, badge:'BAD ENDING · GROOMING', title:'My Groomer, Abang Gamer',
+      body:[
+        `You moved to Telegram and kept everything secret. Over three months, AbangMer.11 slowly changes — asking for late-night selfies, guilting you when you hesitate: "I thought you trusted me? After everything I bought you?" He convinces you your parents are the enemy and your real friends are fake.`,
+        `Isolated and emotionally dependent, you\'re completely brainwashed. One evening he says he bought you a bus ticket to meet at a budget hotel in KL. You pack your bag in the dark, hands shaking, realizing too late that the "cool older brother" has stripped away your freedom. There is no save button to reset your life.`
+      ],
+      lesson:`<b>Red flag missed:</b> A real friend never demands secrecy from your family or isolates you onto private apps. Gifts that come with strings are a control tactic. If this is happening to you, tell a trusted adult or call <b>Talian Kasih 15999</b> / <b>Cyber999</b>.`
+    }
+  });
+}
+function badCatfish(){
+  render({
+    bgm:"Fast, high-pitched, anxiety-inducing string loop",
+    sceneTitle:"Bad Ending 2 / 4",
+    ending:{
+      good:false, badge:'BAD ENDING · SEXTORTION', title:'U Broke My Heart',
+      body:[
+        `Tears blurring your vision, you transfer your RM500 raya savings and send the receipt, praying the nightmare is over.`,
+        `Two minutes later: a clown emoji. "Good kid. Now I know you have money. Send RM1,000 by tomorrow or the photo goes live anyway." Sextortionists never delete the photo — paying only proved their blackmail works. You\'re broke, sleepless, trapped in an endless loop of fear.`
+      ],
+      lesson:`<b>Red flag missed:</b> "Disappearing" messages aren\'t safe — anything can be screen-recorded. Never send intimate images. If you\'re being extorted: stop replying, don\'t pay, screenshot, block, and report to <b>Cyber999</b> or the police. It is <b>not your fault</b> and adults can help.`
+    }
+  });
+}
+function badScammer(){
+  render({
+    bgm:"Low, rhythmic, stressful heartbeat",
+    sceneTitle:"Bad Ending 3 / 4",
+    ending:{
+      good:false, badge:'BAD ENDING · PHISHING SCAM', title:'Money Gone Lah Weh',
+      body:[
+        `You type in the TAC code. The screen flashes: "Transaction Successful: RM4,500 transferred." The_Si_Kamar instantly blocks you everywhere and deletes his account.`,
+        `Five minutes later your mother bursts in, pale and crying — her phone flooded with bank alerts. That was the family\'s emergency savings for your father\'s medical bills and the rent. Because you handed over the code willingly, the bank can\'t reverse it. Your laptop is seized as evidence, and you\'re left crushed by guilt.`
+      ],
+      lesson:`<b>Red flag missed:</b> A <b>TAC/OTP code authorizes a transfer</b> — anyone asking for it is stealing from you. No legitimate job needs your parents\' card or verification codes, and "last slot today!" urgency is a pressure trick. Always check with a trusted adult first.`
+    }
+  });
+}
+function badBully(){
+  render({
+    bgm:"Aggressive, chaotic digital distortion",
+    sceneTitle:"Bad Ending 4 / 4",
+    ending:{
+      good:false, badge:'BAD ENDING · CYBERBULLYING', title:'That One Time I Became A Meme',
+      body:[
+        `You let anger take the wheel — paragraph after paragraph cursing back. But your rage was exactly the entertainment she wanted. She edits your outbursts out of context into a "Cringe Compilation 2026."`,
+        `It goes viral across school districts. Monday assembly: the hallway falls silent, people point and whisper. The mockery spills into real life. Your grades plummet, the counselor steps in, and your phone vibrating now makes you physically sick. Your digital footprint is ruined before you turn 15.`
+      ],
+      lesson:`<b>Red flag missed:</b> Trolls feed on reactions — replying gives them content. The power move is to <b>disengage</b>: screenshot evidence, block, mute notifications, and tell a parent or counselor. Reporting beats arguing every time.`
+    }
+  });
+}
+
+START();
+</script>
+</body>
+</html>
