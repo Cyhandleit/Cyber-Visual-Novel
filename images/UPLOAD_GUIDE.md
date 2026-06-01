@@ -4,7 +4,7 @@
 
 Replace this placeholder with your real shared upload folder URL:
 
-https://example.com/upload-your-images-here
+https://github.com/Cyhandleit/Cyber-Visual-Novel/tree/main/images
 
 ## Folder Structure
 
