@@ -450,20 +450,41 @@ tw-story::before {
     50% { opacity: 1; }
     70% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-tag name="sunset" color="purple"></tw-tag><tw-tag name="bedroom" color="orange"></tw-tag><tw-tag name="lock" color="yellow"></tw-tag><tw-tag name="threat" color="purple"></tw-tag><tw-tag name="feed" color="yellow"></tw-tag><tw-tag name="discord" color="orange"></tw-tag><tw-tag name="credits" color="orange"></tw-tag><tw-passagedata pid="1" name="Start" tags="sunset" position="600,220" size="120,120">&lt;div style=&quot;padding: 20px; color: #e0f0ff; font-family: &#39;Courier New&#39;, monospace; text-align: center;&quot;&gt;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-tag name="sunset" color="purple"></tw-tag><tw-tag name="bedroom" color="orange"></tw-tag><tw-tag name="lock" color="yellow"></tw-tag><tw-tag name="threat" color="purple"></tw-tag><tw-tag name="feed" color="yellow"></tw-tag><tw-tag name="discord" color="orange"></tw-tag><tw-tag name="credits" color="orange"></tw-tag><tw-tag name="main" color="yellow"></tw-tag><tw-tag name="bgm_main" color="green"></tw-tag><tw-tag name="bgm_MAIN" color="red"></tw-tag><tw-tag name="bgm_abangmer_main" color="purple"></tw-tag><tw-tag name="bgm_abangmer_end" color="blue"></tw-tag><tw-tag name="bgm_ulookgut_main" color="red"></tw-tag><tw-tag name="bgm_ulookgut_end" color="blue"></tw-tag><tw-tag name="bgm_sikamar_main" color="blue"></tw-tag><tw-tag name="bgm_sikamar_end" color="green"></tw-tag><tw-tag name="bgm_bawanggirlzzz_main" color="blue"></tw-tag><tw-tag name="bgm_bawanggirlzzz_end" color="yellow"></tw-tag><tw-passagedata pid="1" name="Start" tags="sunset bgm_main" position="625,175" size="120,120">&lt;script&gt;
+  if (!window.myGlobalAudio) {
+    window.myGlobalAudio = new Audio(&#39;audio/main.mp3&#39;);
+    window.myGlobalAudio.loop = true;
+  } else {
+    window.myGlobalAudio.pause();
+    window.myGlobalAudio.src = &#39;audio/main.mp3&#39;;
+    window.myGlobalAudio.load();
+  }
+
+  document.addEventListener(&#39;click&#39;, function playHandler() {
+    window.myGlobalAudio.play().catch(function(e) {
+        console.log(&quot;loading...&quot;);
+    });
+    document.removeEventListener(&#39;click&#39;, playHandler);
+  }, { once: true });
+&lt;/script&gt;
+
+&lt;div style=&quot;padding: 20px; color: #e0f0ff; font-family: &#39;Courier New&#39;, monospace; text-align: center;&quot;&gt;
     &lt;div style=&quot;color: #c0d8f0; font-size: 0.95rem; font-style: italic; margin-bottom: 30px; line-height: 1.6;&quot;&gt;
         &quot;A first laptop.&lt;br&gt;
         A first social account.&lt;br&gt;
         A first week online without supervision.&quot;
     &lt;/div&gt;
-    &lt;div style=&quot;margin-bottom: 30px; padding: 10px; color: #ffcc00; font-weight: bold; letter-spacing: 0.15em; border-top: 1px solid #2a5a8a; border-bottom: 1px solid #2a5a8a;&quot;&gt;
+    &lt;div style=&quot;margin-bottom: 30px; padding: 10px; color: #ffcc00; font-size: 2rem; font-weight: bold; letter-spacing: 0.15em; border-top: 1px solid #2a5a8a; border-bottom: 1px solid #2a5a8a;&quot;&gt;
         CYBERTOK - THINK BEFORE YOU CLICK
     &lt;/div&gt;
+
+    &lt;div style=&quot;margin-bottom: 15px;&quot;&gt;
         [[Start Game-&gt;Scene 01: First Account]]
-        [[Safety Tips First-&gt;Safety Tips]]
-        &lt;span style=&quot;color: #60a0ff;&quot;&gt;[[Assets and Image Upload Guide-&gt;Assets Guide]]&lt;/span&gt;
     &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="2" name="Safety Tips" tags="sunset" position="850,220" size="120,120">&lt;div class=&quot;success-header&quot; style=&quot;text-align: center; margin-bottom: 15px;&quot;&gt;
+    &lt;div&gt;
+        [[Safety Tips First-&gt;Safety Tips]]
+    &lt;/div&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="2" name="Safety Tips" tags="sunset" position="875,175" size="120,120">&lt;div class=&quot;success-header&quot; style=&quot;text-align: center; margin-bottom: 15px;&quot;&gt;
         &lt;h3 style=&quot;color: var(--accent-2); margin: 0;&quot;&gt;SAFETY PROTOCOLS&lt;/h3&gt;
         &lt;p style=&quot;color: var(--text-dim); font-size: 0.85rem; letter-spacing: 0.1em; margin: 5px 0 0 0;&quot;&gt;INITIALIZE SECURE SESSION&lt;/p&gt; &lt;/div&gt;
     &lt;div class=&quot;chat-log&quot; style=&quot;text-align: left; margin: 0;&quot;&gt;
@@ -477,7 +498,7 @@ tw-story::before {
 &lt;div style=&quot;text-align: center; margin-top: 15px;&quot;&gt;
     [[Continue-&gt;Scene 01: First Account]]
     &lt;div style=&quot;margin-top: 5px;&quot;&gt;[[Back to Start-&gt;Start]]&lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Assets Guide" tags="sunset" position="350,220" size="140,120">This project expects images in the local folder:
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Assets Guide" tags="sunset" position="200,25" size="140,120">This project expects images in the local folder:
 images/
 
 Upload folder link (replace with your real team link):
@@ -487,8 +508,7 @@ You can also read the local checklist file:
 images/UPLOAD_GUIDE.md
 
 [[Image Checklist In-Game-&gt;Image Checklist]]
-[[Back to Start-&gt;Start]]</tw-passagedata><tw-passagedata pid="4" name="Scene 01: First Account" tags="bedroom" position="600,380" size="140,120">[Background: Bedroom desk, rain outside, laptop glow.]
-    &lt;p style=&quot;margin: 0 0 10px 0; color: #4a9eff; font-weight: bold;&quot;&gt;[ Welcome to CyberTok Malaysia (v2026.5). Initialize profile.]&lt;/p&gt;
+[[Back to Start-&gt;Start]]</tw-passagedata><tw-passagedata pid="4" name="Scene 01: First Account" tags="bedroom bgm_main" position="625,325" size="140,120">&lt;p style=&quot;margin: 0 0 10px 0; color: #4a9eff; font-weight: bold;&quot;&gt;[ Welcome to CyberTok Malaysia (v2026.5). Initialize profile.]&lt;/p&gt;
     &lt;p style=&quot;margin: 0 0 15px 0;&quot;&gt;
 You: Faiz should be done with cybersecurity class soon. Let me set up fast.&lt;/p&gt;
         &lt;p style=&quot;margin: 0 0 10px 0;&quot;&gt;&amp;gt; Choose username:&lt;/p&gt;
@@ -496,21 +516,23 @@ You: Faiz should be done with cybersecurity class soon. Let me set up fast.&lt;/
             [[RealName&amp;#95Official-&gt;Privacy Choice]]&lt;br&gt;
             [[MythicKidX-&gt;Privacy Choice]]&lt;br&gt;
             [[Custom Username-&gt;Privacy Choice]]
-        &lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Privacy Choice" tags="bedroom" position="600,540" size="140,120">&amp;gt; Select privacy settings:
+        &lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Privacy Choice" tags="bedroom bgm_main" position="625,475" size="140,120">&amp;gt; Select privacy settings:
 
 [[Public account, DMs open-&gt;Scene 02P: Public Start]]
-[[Private account, DMs limited-&gt;Scene 02R: Private Start]]</tw-passagedata><tw-passagedata pid="6" name="Scene 02P: Public Start" tags="feed" position="450,700" size="140,120">[Background: Profile page live, follower count climbs.]
-&lt;p style=&quot;margin: 0 0 15px 0; font-weight: bold;&quot;&gt;Account visibility: PUBLIC.&lt;/p&gt;
+[[Private account, DMs limited-&gt;Scene 02R: Private Start]]</tw-passagedata><tw-passagedata pid="6" name="Scene 02P: Public Start" tags="feed bgm_main" position="475,650" size="140,120">&lt;p style=&quot;margin: 0 0 15px 0; font-weight: bold;&quot;&gt;Account visibility: PUBLIC.&lt;/p&gt;
 &lt;p style=&quot;margin: 0 0 15px 0;&quot;&gt;&amp;gt; Please upload content for your first post:&lt;/p&gt;
     &lt;div style=&quot;padding-left: 15px;&quot;&gt;
         [[OOTD in school uniform (higher exposure)-&gt;Scene 03: Threat Hub]]&lt;br&gt;
         [[Laptop setup photo (lower exposure)-&gt;Scene 03: Threat Hub]]
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="Scene 02R: Private Start" tags="lock" position="760,700" size="140,120">&lt;p style=&quot;margin: 0 0 15px 0; color: #ffaa00; font-weight: bold;&quot;&gt;[SYSTEM ALERT: Incoming Connection Requests]&lt;/p&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="Scene 02R: Private Start" tags="lock bgm_main" position="775,650" size="140,120">&lt;p style=&quot;margin: 0 0 15px 0; color: #ffaa00; font-weight: bold;&quot;&gt;[SYSTEM ALERT: Incoming Connection Requests]&lt;/p&gt;
  &lt;p style=&quot;margin: 0 0 15px 0;&quot;&gt;Multiple follow requests detected from unknown accounts.&lt;/p&gt;
         [[Accept all unknown requests-&gt;Scene 03: Threat Hub]]
         [[Accept only verified mutuals-&gt;Scene 03: Threat Hub]]
         [[Reject unknown requests-&gt;Scene 03: Threat Hub]]
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="8" name="Scene 03: Threat Hub" tags="threat" position="600,860" size="160,120">[Background: Notification flood.]
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="8" name="Scene 03: Threat Hub" tags="threat bgm_main" position="675,850" size="160,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/main.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
     &lt;div style=&quot;color: #60a0ff; font-weight: bold; margin-bottom: 12px;&quot;&gt;INCOMING NOTIFICATIONS:&lt;/div&gt;
         • New DM from AbangMer.11&lt;br&gt;
         • New DM from U&amp;#95look&amp;#95gutt&lt;br&gt;
@@ -521,10 +543,12 @@ You: Faiz should be done with cybersecurity class soon. Let me set up fast.&lt;/
             [[Attractive profile DM (Sextortion route)-&gt;B1 Love Bombing]]
             [[Business offer DM (Scam route)-&gt;S1 Easy Money Bait]]
             [[Toxic comment thread (Cyberbully route)-&gt;C1 Bait Comment]]
-            &lt;span style=&quot;color: #60a0ff;&quot;&gt;[[Skip all and check image assets-&gt;Assets Guide]]&lt;/span&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="G1 Friendly Entry" tags="feed" position="140,1040" size="140,120">[BGM: Calm acoustic]
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="G1 Friendly Entry" tags="feed bgm_abangmer_main" position="175,975" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/abangmer_main.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
 &lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
     &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/abangmer_chat.png&quot; class=&quot;avatar-img&quot;&gt;
@@ -541,7 +565,7 @@ AbangMer.11: Hey bro, I am Mythic rank. Want free carry tonight?
 [[How do I know you are legit?-&gt;G2V Verification Attempt]]
 [[Ignore DM-&gt;G Safe Early Exit]]
 
-</tw-passagedata><tw-passagedata pid="10" name="G2V Verification Attempt" tags="feed" position="140,1200" size="140,120">You: How old are you and which school?
+</tw-passagedata><tw-passagedata pid="10" name="G2V Verification Attempt" tags="feed bgm_abangmer_main" position="175,1150" size="140,120">You: How old are you and which school?
 &lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
     &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/abangmer_chat.png&quot; class=&quot;avatar-img&quot;&gt;
@@ -556,7 +580,7 @@ AbangMer.11: Chill lah. I am 15. Here is my profile screenshot.
 Screenshots are easy to fake.&lt;/div&gt;
 
 [[Trust screenshot-&gt;G2 Personal Probing]]
-[[Refuse and stay cautious-&gt;G Safe Early Exit]]</tw-passagedata><tw-passagedata pid="11" name="G2 Personal Probing" tags="feed" position="300,1200" size="140,120">&lt;div class=&quot;narrator-note&quot; style=&quot;color: #ffffff; font-size: 0.85rem; font-style: italic; margin: 10px 0;&quot;&gt;
+[[Refuse and stay cautious-&gt;G Safe Early Exit]]</tw-passagedata><tw-passagedata pid="11" name="G2 Personal Probing" tags="feed bgm_abangmer_main" position="325,1150" size="140,120">&lt;div class=&quot;narrator-note&quot; style=&quot;color: #ffffff; font-size: 0.85rem; font-style: italic; margin: 10px 0;&quot;&gt;
 Conversation shifts from gaming to your family stress.  &lt;/div&gt;
 &lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
@@ -570,7 +594,7 @@ Conversation shifts from gaming to your family stress.  &lt;/div&gt;
 
 [[Share deeper personal problems-&gt;G3 Isolation Tactic]]
 [[Keep chat game-only-&gt;G3 Isolation Tactic]]
-[[End session politely-&gt;G Safe Early Exit]]</tw-passagedata><tw-passagedata pid="12" name="G3 Isolation Tactic" tags="feed" position="300,1360" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
+[[End session politely-&gt;G Safe Early Exit]]</tw-passagedata><tw-passagedata pid="12" name="G3 Isolation Tactic" tags="feed bgm_abangmer_main" position="325,1300" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
     &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/abangmer_chat.png&quot; class=&quot;avatar-img&quot;&gt;
  
@@ -585,7 +609,7 @@ AbangMer.11: That Faiz friend does not care about you like I do.
 &lt;/div&gt;
 [[Maybe you are right...-&gt;G4 Secrecy and Migration]]
 [[Do not talk about my friends-&gt;G4 Secrecy and Migration]]
-[[Screenshot this message-&gt;G4 Secrecy and Migration]]</tw-passagedata><tw-passagedata pid="13" name="G4 Secrecy and Migration" tags="feed" position="300,1520" size="150,120">&lt;div class=&quot;avatar-box has-warning&quot;&gt;
+[[Screenshot this message-&gt;G4 Secrecy and Migration]]</tw-passagedata><tw-passagedata pid="13" name="G4 Secrecy and Migration" tags="feed bgm_abangmer_main" position="325,1475" size="150,120">&lt;div class=&quot;avatar-box has-warning&quot;&gt;
   &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/abangmer_chat.png&quot; class=&quot;avatar-img&quot;&gt;
 &lt;/div&gt;
 
@@ -598,12 +622,20 @@ AbangMer.11: Move to Telegram. Keep this between us. I will send 1,000 diamonds.
 [CRITICAL CHOICE]
 [[Accept and move secretly-&gt;G BAD Ending]]
 [[Refuse secrecy, block, report-&gt;G GOOD Resolution]]
-[[Tell trusted adult first-&gt;G GOOD Resolution]]</tw-passagedata><tw-passagedata pid="14" name="G Safe Early Exit" tags="feed" position="60,1360" size="140,120">&lt;div class=&quot;success-screen&quot;&gt;
+[[Tell trusted adult first-&gt;G GOOD Resolution]]</tw-passagedata><tw-passagedata pid="14" name="G Safe Early Exit" tags="feed bgm_abangmer_end" position="75,1300" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/good_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;success-screen&quot;&gt;
         &lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt; You exited before grooming could escalate.&lt;/p&gt;
     &lt;div class=&quot;success-tip&quot;&gt;
         &lt;p&gt;&lt;strong&gt;Cybersecurity Note:&lt;/strong&gt; Fast trust combined with pressure for secrecy is a major red flag. Recognizing these signs early is the best defense.&lt;/p&gt;
     &lt;/div&gt;
-[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="15" name="G GOOD Resolution" tags="feed" position="460,1520" size="140,120">&lt;div class=&quot;success-screen&quot;&gt;
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="15" name="G GOOD Resolution" tags="feed bgm_abangmer_end" position="475,1625" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/good_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;success-screen&quot;&gt;
     &lt;div class=&quot;success-header&quot;&gt;
         &lt;p&gt;&lt;strong&gt;You:&lt;/strong&gt; Real friends do not need secrets. Blocked.&lt;/p&gt;
         &lt;p class=&quot;system-msg&quot;&gt;&lt;em&gt;System: User reported for suspicious grooming behavior.&lt;/em&gt;&lt;/p&gt;
@@ -611,7 +643,11 @@ AbangMer.11: Move to Telegram. Keep this between us. I will send 1,000 diamonds.
     &lt;div class=&quot;success-tip&quot;&gt;
         &lt;p&gt;Blocking and reporting successfully neutralized the threat. Involving a trusted adult is the correct final step.&lt;/p&gt;
     &lt;/div&gt;
-[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="16" name="G BAD Ending" tags="feed" position="150,1675" size="140,120">&lt;div class=&quot;threat-card-vanish&quot;&gt;
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="16" name="G BAD Ending" tags="feed bgm_abangmer_end" position="175,1625" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/abangmer_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;threat-card-vanish&quot;&gt;
   &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/ui/bad_ending_threat.png&quot; style=&quot;width: 100%;&quot;&gt;
 &lt;/div&gt;
 
@@ -626,7 +662,11 @@ AbangMer.11: Move to Telegram. Keep this between us. I will send 1,000 diamonds.
     &lt;/ul&gt;
 &lt;/div&gt;
 
-[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="17" name="B1 Love Bombing" tags="feed" position="520,1040" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
+[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="17" name="B1 Love Bombing" tags="feed bgm_ulookgut_main" position="550,975" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/ulookgut_main.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
     &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/ulookgut_chat.png&quot; class=&quot;avatar-img&quot;&gt;
   &lt;/div&gt;
@@ -639,7 +679,7 @@ U&amp;#95look&amp;#95gut: You are totally my type. I feel like we connect.
 
 [[Flirt back quickly-&gt;B2 Private Platform Push]]
 [[Keep neutral tone-&gt;B2 Private Platform Push]]
-[[Ignore message-&gt;B Safe Early Exit]]</tw-passagedata><tw-passagedata pid="18" name="B2 Private Platform Push" tags="feed" position="520,1200" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
+[[Ignore message-&gt;B Safe Early Exit]]</tw-passagedata><tw-passagedata pid="18" name="B2 Private Platform Push" tags="feed bgm_ulookgut_main" position="550,1150" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
     &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/ulookgut_chat.png&quot; class=&quot;avatar-img&quot;&gt;
   &lt;/div&gt;
@@ -651,7 +691,7 @@ U&amp;#95look&amp;#95gut: Move to Snapchat or Telegram. Messages disappear there
 Disappearing messages can still be recorded.&lt;/div&gt;
 [[Move platform-&gt;B3 Pressure Request]]
 [[Stay on CyberTok only-&gt;B3 Pressure Request]]
-[[Stop chatting-&gt;B Safe Early Exit]]</tw-passagedata><tw-passagedata pid="19" name="B3 Pressure Request" tags="feed" position="525,1350" size="140,120">&lt;div class=&quot;avatar-box has-warning&quot;&gt;
+[[Stop chatting-&gt;B Safe Early Exit]]</tw-passagedata><tw-passagedata pid="19" name="B3 Pressure Request" tags="feed bgm_ulookgut_main" position="550,1300" size="140,120">&lt;div class=&quot;avatar-box has-warning&quot;&gt;
   &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/ulookgut_chat.png&quot; class=&quot;avatar-img&quot;&gt;
 &lt;/div&gt;
 
@@ -666,17 +706,29 @@ Guilt and affection are being weaponized.
 [CRITICAL CHOICE]
 [[Send image under pressure-&gt;B BAD Ending]]
 [[Refuse, screenshot, block/report-&gt;B GOOD Resolution]]
-[[Tell trusted adult before responding-&gt;B GOOD Resolution]]</tw-passagedata><tw-passagedata pid="20" name="B Safe Early Exit" tags="feed" position="690,1200" size="140,120">&lt;div class=&quot;success-screen&quot;&gt;
+[[Tell trusted adult before responding-&gt;B GOOD Resolution]]</tw-passagedata><tw-passagedata pid="20" name="B Safe Early Exit" tags="feed bgm_ulookgut_end" position="725,1150" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/good_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;success-screen&quot;&gt;
     &lt;div class=&quot;success-tip&quot; style=&quot;margin: 20px 0;&quot;&gt;
         &lt;p&gt;You declined the fast-intimacy trap and restricted contact. Detecting the manipulation of emotional urgency early allowed you to bypass the risk entirely.&lt;/p&gt;
     &lt;/div&gt;
-[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="21" name="B GOOD Resolution" tags="feed" position="690,1360" size="140,120">&lt;div class=&quot;success-screen&quot;&gt;
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="21" name="B GOOD Resolution" tags="feed bgm_ulookgut_end" position="725,1300" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/good_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;success-screen&quot;&gt;
         &lt;strong&gt;Action Taken:&lt;/strong&gt;
         &lt;p&gt;You screenshot threats, block the account, report in-app, and tell a trusted adult. &lt;/p&gt;
     &lt;div class=&quot;success-tip&quot; style=&quot;margin-top: 20px;&quot;&gt;
         &lt;p&gt;You have successfully cut the power to the extortionist. By refusing to pay and seeking support, you&#39;ve ensured your safety.&lt;/p&gt;
 &lt;/div&gt;
-[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="22" name="B BAD Ending" tags="feed" position="525,1525" size="140,120">&lt;div class=&quot;threat-card-vanish&quot;&gt;
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="22" name="B BAD Ending" tags="feed bgm_ulookgut_end" position="550,1475" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/ulookgut_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;threat-card-vanish&quot;&gt;
   &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/ui/bad_ending_threat.png&quot; style=&quot;width: 100%;&quot;&gt;
 &lt;/div&gt;
 
@@ -691,7 +743,10 @@ Guilt and affection are being weaponized.
     &lt;/ul&gt;
 &lt;/div&gt;
 
-[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="23" name="S1 Easy Money Bait" tags="feed" position="900,1040" size="140,120">[BGM: Busy electronic rhythm]
+[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="23" name="S1 Easy Money Bait" tags="feed bgm_sikamar_main" position="925,975" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/sikamar_main.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
 &lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
     &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/sikamar_chat.png&quot; class=&quot;avatar-img&quot;&gt;
@@ -705,7 +760,7 @@ The&amp;#95Si&amp;#95Kamar: Student can earn RM200 daily. Easy work.
 &lt;/div&gt;
 [[Tell me more-&gt;S2 Urgency and Fake Proof]]
 [[I need to verify first-&gt;S2 Urgency and Fake Proof]]
-[[Ignore and report-&gt;S Safe Early Exit]]</tw-passagedata><tw-passagedata pid="24" name="S2 Urgency and Fake Proof" tags="feed" position="900,1200" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
+[[Ignore and report-&gt;S Safe Early Exit]]</tw-passagedata><tw-passagedata pid="24" name="S2 Urgency and Fake Proof" tags="feed bgm_sikamar_main" position="925,1150" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
     &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/sikamar_chat.png&quot; class=&quot;avatar-img&quot;&gt;
   &lt;/div&gt;
@@ -716,7 +771,7 @@ The&amp;#95Si&amp;#95Kamar: Last day today. Slots almost full. See my proof scre
 Urgency reduces critical thinking.&lt;/div&gt;
 [[Continue quickly-&gt;S3 Credential Theft Request]]
 [[Ask parent before continuing-&gt;S GOOD Resolution]]
-[[Ask for registered company info-&gt;S3V Verification Fail]]</tw-passagedata><tw-passagedata pid="25" name="S3V Verification Fail" tags="feed" position="1060,1200" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
+[[Ask for registered company info-&gt;S3V Verification Fail]]</tw-passagedata><tw-passagedata pid="25" name="S3V Verification Fail" tags="feed bgm_abangmer_main" position="1075,1150" size="140,120">&lt;div class=&quot;clearfix&quot;&gt;
   &lt;div class=&quot;avatar-box&quot;&gt;
     &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/sikamar_chat.png&quot; class=&quot;avatar-img&quot;&gt;
   &lt;/div&gt;
@@ -729,7 +784,7 @@ The&amp;#95Si&amp;#95Kamar: No need so formal. Trust me lah.
 &lt;div class=&quot;narrator-note&quot; style=&quot;color: #60a0ff; font-size: 0.85rem; font-style: italic; margin: 10px 0;&quot;&gt;
 He avoids verifiable details..&lt;/div&gt;
 [[Proceed anyway-&gt;S3 Credential Theft Request]]
-[[Stop and report-&gt;S GOOD Resolution]]</tw-passagedata><tw-passagedata pid="26" name="S3 Credential Theft Request" tags="feed" position="900,1360" size="150,120">&lt;div class=&quot;avatar-box has-warning&quot;&gt;
+[[Stop and report-&gt;S GOOD Resolution]]</tw-passagedata><tw-passagedata pid="26" name="S3 Credential Theft Request" tags="feed bgm_sikamar_main" position="925,1300" size="150,120">&lt;div class=&quot;avatar-box has-warning&quot;&gt;
   &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/sikamar_chat.png&quot; class=&quot;avatar-img&quot;&gt;
 &lt;/div&gt;
 
@@ -745,17 +800,29 @@ Legitimate services do not ask for TAC/OTP.&lt;/div&gt;
 [CRITICAL CHOICE]
 [[Share TAC code-&gt;S BAD Ending]]
 [[Refuse, screenshot, report-&gt;S GOOD Resolution]]
-[[Tell parent immediately-&gt;S GOOD Resolution]]</tw-passagedata><tw-passagedata pid="27" name="S Safe Early Exit" tags="feed" position="1220,1200" size="140,120">&lt;div class=&quot;success-screen&quot;&gt;
+[[Tell parent immediately-&gt;S GOOD Resolution]]</tw-passagedata><tw-passagedata pid="27" name="S Safe Early Exit" tags="feed" position="1250,1150" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/good_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;success-screen&quot;&gt;
     &lt;div class=&quot;success-tip&quot; style=&quot;margin: 20px 0;&quot;&gt;
         &lt;p&gt;You reported the scam entry point before account compromise. Proactive detection is the most effective way to prevent loss. The threat has been contained.&lt;/p&gt;
     &lt;/div&gt;
-[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="28" name="S GOOD Resolution" tags="feed" position="1060,1360" size="140,120">&lt;div class=&quot;success-screen&quot;&gt;
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="28" name="S GOOD Resolution" tags="feed bgm_sikamar_end" position="1075,1300" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/good_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;success-screen&quot;&gt;
         &lt;p&gt;&lt;strong&gt;You:&lt;/strong&gt; Real jobs do not need stolen bank access. Reported.&lt;/p&gt;
     &lt;div class=&quot;success-tip&quot;&gt;
         &lt;p&gt;You correctly identified the signs of a money-mule scam. By refusing to compromise your account and reporting the incident, you protected your financial identity.&lt;/p&gt;
     &lt;/div&gt;
 
-[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="29" name="S BAD Ending" tags="feed" position="900,1520" size="140,120">&lt;div class=&quot;threat-card-vanish&quot;&gt;
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="29" name="S BAD Ending" tags="feed bgm_sikamar_end" position="925,1475" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/sikamar_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;threat-card-vanish&quot;&gt;
   &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/ui/bad_ending_threat.png&quot; style=&quot;width: 100%;&quot;&gt;
 &lt;/div&gt;
 
@@ -770,7 +837,10 @@ Legitimate services do not ask for TAC/OTP.&lt;/div&gt;
     &lt;/ul&gt;
 &lt;/div&gt;
 
-[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="30" name="C1 Bait Comment" tags="feed" position="1280,1040" size="140,120">[BGM: Low bass tension]
+[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="30" name="C1 Bait Comment" tags="feed bgm_bawanggirlzzz_main" position="1300,975" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/bawanggirlzzz_main.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
 &lt;div class=&quot;avatar-box has-warning&quot;&gt;
   &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/characters/bawanggirlzzz_chat.png&quot; class=&quot;avatar-img&quot;&gt;
 &lt;/div&gt;
@@ -781,11 +851,15 @@ BawangGirlzzz: Ew, cringe. Go back to Roblox.
 &lt;/div&gt;
 [[Reply angrily-&gt;C2 Dogpile Escalation]]
 [[Reply once, then stop-&gt;C2 Dogpile Escalation]]
-[[No reply, mute thread-&gt;C GOOD Resolution]]</tw-passagedata><tw-passagedata pid="31" name="C2 Dogpile Escalation" tags="feed" position="1275,1200" size="140,120">&lt;div class=&quot;narrator-note&quot; style=&quot;color: #ffffff; font-size: 0.85rem; font-style: italic; margin: 10px 0;&quot;&gt;
+[[No reply, mute thread-&gt;C GOOD Resolution]]</tw-passagedata><tw-passagedata pid="31" name="C2 Dogpile Escalation" tags="feed bgm_bawanggirlzzz_main" position="1300,1150" size="140,120">&lt;div class=&quot;narrator-note&quot; style=&quot;color: #ffffff; font-size: 0.85rem; font-style: italic; margin: 10px 0;&quot;&gt;
 Your photo is reposted as a meme. Strangers pile into comments and DMs.&lt;/div&gt;
 [[Post long angry defense-&gt;C BAD Ending]]
 [[Collect evidence quietly-&gt;C GOOD Resolution]]
-[[Ask parent or counselor for help now-&gt;C GOOD Resolution]]</tw-passagedata><tw-passagedata pid="32" name="C GOOD Resolution" tags="feed" position="1450,1200" size="140,120">&lt;div class=&quot;success-screen&quot;&gt;
+[[Ask parent or counselor for help now-&gt;C GOOD Resolution]]</tw-passagedata><tw-passagedata pid="32" name="C GOOD Resolution" tags="feed bgm_bawanggirlzzz_end" position="1475,1150" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/good_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;success-screen&quot;&gt;
     &lt;div class=&quot;evidence-popup&quot; style=&quot;margin: 20px 0;&quot;&gt;
       &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/ui/evidence_folder.png&quot; style=&quot;width: 100%; border-radius: 8px; border: 1px solid var(--accent-2);&quot;&gt;
     &lt;/div&gt;
@@ -796,7 +870,11 @@ Your photo is reposted as a meme. Strangers pile into comments and DMs.&lt;/div&
         &lt;p&gt;By collecting evidence before blocking, you have empowered yourself to take action beyond just deleting the messages. The harassment stops here.&lt;/p&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="33" name="C BAD Ending" tags="feed" position="1280,1360" size="140,120">&lt;div class=&quot;threat-card-vanish&quot;&gt;
+[[Continue to debrief call-&gt;End Hub]]</tw-passagedata><tw-passagedata pid="33" name="C BAD Ending" tags="feed bgm_bawanggirlzzz_end" position="1300,1300" size="140,120">&lt;script&gt;
+  window.myGlobalAudio.src = &#39;audio/bawanggirlzzz_end.mp3&#39;;
+  window.myGlobalAudio.play();
+&lt;/script&gt;
+&lt;div class=&quot;threat-card-vanish&quot;&gt;
   &lt;img src=&quot;https://raw.githubusercontent.com/Cyhandleit/Cyber-Visual-Novel/main/images/ui/bad_ending_threat.png&quot; style=&quot;width: 100%;&quot;&gt;
 &lt;/div&gt;
 
@@ -811,15 +889,13 @@ Your photo is reposted as a meme. Strangers pile into comments and DMs.&lt;/div&
         &lt;li&gt;&lt;strong&gt;Disengage,&lt;/strong&gt; document, report, escalate.&lt;/li&gt;
     &lt;/ul&gt;
 &lt;/div&gt;
-[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="34" name="End Hub" tags="discord" position="760,1760" size="160,120">[Background: Discord call with FaizTheGoat]
-
-Faiz: How was your first week on CyberTok?
+[[Try Again-&gt;Restart Prompt]]</tw-passagedata><tw-passagedata pid="34" name="End Hub" tags="discord bgm_main" position="775,1700" size="160,120">Faiz: How was your first week on CyberTok?
 
 You: Messy. But I saw the red flags and acted.
 &lt;/div&gt;
 Choose your wrap-up:
 [[I blocked threats and asked for help early-&gt;GOOD ENDING]]
-[[I made some unsafe choices but want to recover-&gt;PARTIAL ENDING]]</tw-passagedata><tw-passagedata pid="35" name="GOOD ENDING" tags="feed" position="625,1925" size="160,120">&lt;div class=&quot;ending-panel&quot;&gt;
+[[I made some unsafe choices but want to recover-&gt;PARTIAL ENDING]]</tw-passagedata><tw-passagedata pid="35" name="GOOD ENDING" tags="feed" position="650,1875" size="160,120">&lt;div class=&quot;ending-panel&quot;&gt;
     &lt;h3&gt;GOOD ENDING - Think Before You Click&lt;/h3&gt;Learning recap:
     &lt;ul class=&quot;recap-list&quot;&gt;
         &lt;li&gt;&lt;strong&gt;Grooming:&lt;/strong&gt; kindness + secrecy + isolation&lt;/li&gt;
@@ -831,7 +907,7 @@ Choose your wrap-up:
 [[Credits-&gt;Credits]]
 [[Restart story-&gt;Start]]
 &lt;/div&gt;
-</tw-passagedata><tw-passagedata pid="36" name="PARTIAL ENDING" tags="feed" position="900,1920" size="160,120">&lt;div class=&quot;recovery-panel&quot;&gt;
+</tw-passagedata><tw-passagedata pid="36" name="PARTIAL ENDING" tags="feed bgm_main" position="925,1875" size="160,120">&lt;div class=&quot;recovery-panel&quot;&gt;
     &lt;h3&gt; Recovery Starts Now&lt;/h3&gt;
 Recovery actions:
 &lt;ul&gt;
@@ -841,16 +917,15 @@ Recovery actions:
 &lt;li&gt;Contact official help channels&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;[[Credits-&gt;Credits]]
-[[Restart story-&gt;Start]]</tw-passagedata><tw-passagedata pid="37" name="Restart Prompt" tags="feed" position="520,1840" size="150,120">&lt;div style=&quot;background: rgba(40, 10, 10, 0.8); padding: 20px; border-radius: 8px; border: 1px solid #ff4a4a; color: #ffcccc; font-family: &#39;Courier New&#39;, monospace; text-align: center;&quot;&gt;
+[[Restart story-&gt;Start]]</tw-passagedata><tw-passagedata pid="37" name="Restart Prompt" tags="feed bgm_main" position="400,1950" size="150,120">&lt;div style=&quot;background: rgba(40, 10, 10, 0.8); padding: 20px; border-radius: 8px; border: 1px solid #ff4a4a; color: #ffcccc; font-family: &#39;Courier New&#39;, monospace; text-align: center;&quot;&gt;
     &lt;div style=&quot;font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: #ff4a4a;&quot;&gt;
         [You reached a bad ending.]
     &lt;/div&gt;
     &lt;div style=&quot;text-align: center; line-height: 2;&quot;&gt;
         [[Return to route hub-&gt;Scene 03: Threat Hub]]
         [[Return to title screen-&gt;Start]]
-        &lt;span style=&quot;color: #ffcc00;&quot;&gt;[[Open image checklist before replay-&gt;Image Checklist]]&lt;/span&gt;
     &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="38" name="Credits" tags="credits" position="760,2080" size="140,120">&lt;div style=&quot;padding: 20px; color: #e0f0ff; font-family: &#39;Courier New&#39;, monospace; text-align: center;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="38" name="Credits" tags="credits bgm_main" position="775,2025" size="140,120">&lt;div style=&quot;padding: 20px; color: #e0f0ff; font-family: &#39;Courier New&#39;, monospace; text-align: center;&quot;&gt;
     &lt;p style=&quot;margin: 0 0 10px 0; font-size: 1rem;&quot;&gt;
         Cyber safety is not one setting.&lt;br&gt;
         It is a &lt;span style=&quot;color: #ffcc00;&quot;&gt;habit&lt;/span&gt; built in small decisions.
@@ -859,9 +934,8 @@ Recovery actions:
         &lt;strong&gt;PROTOCOL:&lt;/strong&gt; Pause. Document. Report. Tell someone you trust.
     &lt;/div&gt;
         [[Play Again-&gt;Start]]&lt;br&gt;
-        [[Assets and upload guide-&gt;Assets Guide]]
     &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="39" name="Image Checklist" tags="sunset" position="350,380" size="160,120">Image folders expected:
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="39" name="Image Checklist" tags="sunset" position="150,475" size="160,120">Image folders expected:
 - images/backgrounds/
 - images/characters/
 - images/ui/
